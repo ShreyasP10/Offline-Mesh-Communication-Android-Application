@@ -11,6 +11,22 @@ Decentralized, infrastructure-free peer-to-peer messaging for Android. Phones di
 
 Full steps: [`docs/06-Deployment-and-User-Manual.md`](docs/06-Deployment-and-User-Manual.md)
 
+## Android App (Java Boilerplate)
+
+Stock Android-Java skeleton, no features yet — ready to build on:
+
+```
+app/src/main/java/com/example/omc/MainActivity.java
+app/src/main/AndroidManifest.xml
+app/src/main/res/layout/activity_main.xml
+app/src/main/res/values/{strings,colors,themes}.xml
+app/src/test/.../ExampleUnitTest.java
+app/src/androidTest/.../ExampleInstrumentedTest.java
+```
+
+- Open this folder in Android Studio (Hedgehog+, JDK 17) and let it sync; or run `./gradlew assembleDebug` once the Gradle wrapper jar is present (`gradle wrapper` generates it).
+- `applicationId = com.example.omc`, `minSdk 26`, `targetSdk/compileSdk 34`.
+
 ## Documentation Index
 
 Read in numeric order — each document feeds the next.

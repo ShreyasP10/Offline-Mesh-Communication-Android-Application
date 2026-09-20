@@ -1,0 +1,14 @@
+# Android / Gradle (project docs in docs/ are intentionally NOT ignored)
+*.iml
+.gradle/
+local.properties
+.idea/
+.DS_Store
+build/
+app/build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.ap_
