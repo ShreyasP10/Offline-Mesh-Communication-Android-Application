@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F7FA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:background="#1976D2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Mesh Configuration"
+            android:textColor="#1976D2"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <Switch
+            android:id="@+id/autoDiscoverySwitch"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Automatic Discovery"
+            android:textSize="15sp" />
+
+        <Switch
+            android:id="@+id/advertisingSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Device Advertising"
+            android:textSize="15sp" />
+
+        <Switch
+            android:id="@+id/forwardingSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Message Forwarding"
+            android:textSize="15sp" />
+
+        <Switch
+            android:id="@+id/storeForwardSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Store and Forward"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Device"
+            android:textColor="#1976D2"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/deviceNameText"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:text="Device Name: --"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/resetSettingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_margin="20dp"
+            android:text="Reset Settings" />
+
+    </LinearLayout>
+
+</ScrollView>

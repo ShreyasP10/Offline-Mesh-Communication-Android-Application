@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F7FA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:background="#1976D2">
+
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_media_previous"
+                android:tint="#FFFFFF"
+                android:contentDescription="Back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Peer Details"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_mesh"
+            android:contentDescription="Peer"
+            android:tint="#1976D2" />
+
+        <TextView
+            android:id="@+id/peerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Peer Device"
+            android:textColor="#212121"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/peerStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="Connected"
+            android:textColor="#388E3C"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            android:padding="18dp"
+            android:background="@drawable/bg_message">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Device Information"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#212121" />
+
+            <TextView
+                android:id="@+id/peerId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="Peer ID: --"
+                android:textSize="15sp"
+                android:textColor="#555555" />
+
+            <TextView
+                android:id="@+id/peerAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Address: --"
+                android:textSize="15sp"
+                android:textColor="#555555" />
+
+            <TextView
+                android:id="@+id/peerTransport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Transport: --"
+                android:textSize="15sp"
+                android:textColor="#555555" />
+
+            <TextView
+                android:id="@+id/peerLastSeen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Last Seen: --"
+                android:textSize="15sp"
+                android:textColor="#555555" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/messagePeerButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="Send Message" />
+
+    </LinearLayout>
+
+</ScrollView>
