@@ -216,6 +216,15 @@ Read in numeric order — each document feeds the next.
 3. Every PR must keep `./gradlew test` green and add/extend unit tests for `protocol/`, `routing/`, `dtn/`.
 4. Never change the OMC/1.0 packet format without a written change request (RPD §10).
 
+
+## Contributors
+| | |
+|---|---|
+| **Your Name** | [GitHub](put your github link) |
+| **Your Name** | [GitHub](put your github link) |
+| **Your Name** | [GitHub](put your github link) |
+| **Your Name** | [GitHub](put your github link) |
+
 ## Submission Checklist
 
 - [ ] Fill all `____________` blanks (names, dates, device matrix, measured results).
