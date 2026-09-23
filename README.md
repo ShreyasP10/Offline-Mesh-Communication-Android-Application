@@ -220,7 +220,7 @@ Read in numeric order — each document feeds the next.
 ## Contributors
 | | |
 |---|---|
-| **Your Name** | [GitHub](put your github link) |
+| **Veer Shah** | [GitHub][(https://github.com/veershah696) |
 | **Your Name** | [GitHub](put your github link) |
 | **Your Name** | [GitHub](put your github link) |
 | **Your Name** | [GitHub](put your github link) |
