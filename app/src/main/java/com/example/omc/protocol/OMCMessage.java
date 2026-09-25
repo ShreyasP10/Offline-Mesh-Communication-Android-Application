@@ -6,6 +6,8 @@ public class OMCMessage {
 
     private String payload;
 
+    private String signature;
+
     public OMCMessage() {
         // Required by Gson
     }
@@ -14,9 +16,18 @@ public class OMCMessage {
             OMCHeader header,
             String payload
     ) {
-
         this.header = header;
         this.payload = payload;
+    }
+
+    public OMCMessage(
+            OMCHeader header,
+            String payload,
+            String signature
+    ) {
+        this.header = header;
+        this.payload = payload;
+        this.signature = signature;
     }
 
     public OMCHeader getHeader() {
@@ -33,5 +44,13 @@ public class OMCMessage {
 
     public void setPayload(String payload) {
         this.payload = payload;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

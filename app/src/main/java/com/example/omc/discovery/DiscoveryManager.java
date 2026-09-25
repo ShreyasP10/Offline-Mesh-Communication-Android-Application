@@ -27,6 +27,7 @@ public class DiscoveryManager {
 
     private boolean advertising = false;
     private boolean discovering = false;
+    private boolean lowPowerMode = false;
 
     public interface DiscoveryListener {
 
@@ -62,7 +63,7 @@ public class DiscoveryManager {
         AdvertisingOptions options =
                 new AdvertisingOptions.Builder()
                         .setStrategy(Strategy.P2P_CLUSTER)
-                        .setLowPower(false)
+                        .setLowPower(lowPowerMode)
                         .build();
 
         connectionsClient
@@ -149,7 +150,7 @@ public class DiscoveryManager {
         DiscoveryOptions options =
                 new DiscoveryOptions.Builder()
                         .setStrategy(Strategy.P2P_CLUSTER)
-                        .setLowPower(false)
+                        .setLowPower(lowPowerMode)
                         .build();
 
         connectionsClient
@@ -207,7 +208,23 @@ public class DiscoveryManager {
         }
     }
 
+    public void setLowPowerMode(boolean lowPower, ConnectionLifecycleCallback cb) {
+        if (this.lowPowerMode == lowPower) return;
+        this.lowPowerMode = lowPower;
+        Log.d(TAG, "Adaptive scanning duty-cycle updated: lowPower=" + lowPower);
 
+        if (advertising && cb != null) {
+            connectionsClient.stopAdvertising();
+            advertising = false;
+            startAdvertising(cb);
+        }
+
+        if (discovering) {
+            connectionsClient.stopDiscovery();
+            discovering = false;
+            startDiscovery();
+        }
+    }
 
     public boolean isAdvertising() {
         return advertising;

@@ -7,11 +7,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.omc.R;
+import com.example.omc.discovery.Peer;
 import com.example.omc.mesh.MeshConfig;
 import com.example.omc.mesh.MeshLogger;
 import com.example.omc.mesh.MeshManager;
@@ -26,6 +28,7 @@ public class LogsActivity extends AppCompatActivity {
     private TextView diagCounters;
     private TextView logStatusText;
     private RecyclerView logsRecyclerView;
+    private Button viewTopologyButton;
     private Button exportLogsButton;
     private Button clearLogsButton;
     private LogAdapter logAdapter;
@@ -55,10 +58,12 @@ public class LogsActivity extends AppCompatActivity {
         diagCounters = findViewById(R.id.diagCounters);
         logStatusText = findViewById(R.id.logStatusText);
         logsRecyclerView = findViewById(R.id.logsRecyclerView);
+        viewTopologyButton = findViewById(R.id.viewTopologyButton);
         exportLogsButton = findViewById(R.id.exportLogsButton);
         clearLogsButton = findViewById(R.id.clearLogsButton);
 
         backButton.setOnClickListener(v -> finish());
+        viewTopologyButton.setOnClickListener(v -> showTopologyDialog());
 
         logAdapter = new LogAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -91,12 +96,15 @@ public class LogsActivity extends AppCompatActivity {
         int peers = meshManager.getConnectedPeerCount();
         int routes = meshManager.getRoutingTableSize();
         int pending = meshManager.getDtnPendingCount();
-        diagMeshStats.setText("Peers Connected: " + peers + " | Routes: " + routes + " | DTN Pending: " + pending);
+        long oldestAgeSec = meshManager.getDtnOldestPendingAgeSec();
+        String pendingStr = pending + (pending > 0 ? " (" + oldestAgeSec + "s old)" : "");
+        diagMeshStats.setText("Peers Connected: " + peers + " | Routes: " + routes + " | DTN Pending: " + pendingStr);
 
         int dedup = meshManager.getSeenCacheSize();
         int ttlDrops = meshManager.getTtlDropsCount();
         int dupDrops = meshManager.getDupDropsCount();
-        diagCounters.setText("Dedup LRU: " + dedup + " | TTL Drops: " + ttlDrops + " | Dup Drops: " + dupDrops);
+        int malformedDrops = meshManager.getMalformedDropsCount();
+        diagCounters.setText("Dedup LRU: " + dedup + " | TTL Drops: " + ttlDrops + " | Dup: " + dupDrops + " | Malformed: " + malformedDrops);
     }
 
     private void updateStatusText() {
@@ -129,6 +137,65 @@ public class LogsActivity extends AppCompatActivity {
         sendIntent.putExtra(Intent.EXTRA_SUBJECT, "OMC Mesh Log - " + meshManager.getLocalNode().getNodeName());
         sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
         startActivity(Intent.createChooser(sendIntent, "Export OMC Logs via"));
+    }
+
+    private void showTopologyDialog() {
+        StringBuilder sb = new StringBuilder();
+        String localNodeName = meshManager.getLocalNode().getNodeName();
+        String localNodeId = meshManager.getLocalNode().getNodeId();
+
+        sb.append("📍 LOCAL NODE (Self)\n");
+        sb.append("Name: ").append(localNodeName).append("\n");
+        sb.append("Node ID: ").append(localNodeId).append("\n");
+        sb.append("Status: ").append(meshManager.isMeshRunning() ? "ONLINE (Active)" : "OFFLINE").append("\n");
+        sb.append("Protocol: ").append(MeshConfig.PROTOCOL_VERSION).append("\n\n");
+
+        sb.append("🔗 DIRECT 1-HOP NEIGHBORS (").append(meshManager.getConnectedPeerCount()).append(")\n");
+        List<Peer> peers = meshManager.getDiscoveredPeers();
+        boolean hasConnected = false;
+        if (peers != null && !peers.isEmpty()) {
+            for (Peer p : peers) {
+                if (p.isConnected()) {
+                    hasConnected = true;
+                    String shortId = p.getNodeId().length() > 8 ? p.getNodeId().substring(0, 8) + "..." : p.getNodeId();
+                    sb.append("• ").append(p.getName())
+                            .append(" [").append(shortId).append("]\n")
+                            .append("  Link: Nearby P2P_CLUSTER (Direct)\n");
+                }
+            }
+        }
+        if (!hasConnected) {
+            sb.append("  (No direct peers currently connected)\n");
+        }
+
+        sb.append("\n🗺️ ROUTING TABLE (Multi-Hop Shortest Paths)\n");
+        List<com.example.omc.routing.Route> routes = meshManager.getRoutingTableRoutes();
+        if (routes != null && !routes.isEmpty()) {
+            for (com.example.omc.routing.Route r : routes) {
+                String destId = r.getDestinationId();
+                String shortDest = destId.length() > 8 ? destId.substring(0, 8) + "..." : destId;
+                sb.append("• Dest: ").append(shortDest)
+                        .append(" | Next: ").append(r.getNextHopId())
+                        .append(" | Cost: ").append(r.getHopCount()).append(" hop(s)\n");
+            }
+        } else {
+            sb.append("  (No multi-hop routes cached)\n");
+        }
+
+        sb.append("\n📦 DTN STORE-AND-FORWARD QUEUE\n");
+        int pending = meshManager.getDtnPendingCount();
+        if (pending > 0) {
+            sb.append("  Pending Messages: ").append(pending)
+                    .append(" (Oldest: ").append(meshManager.getDtnOldestPendingAgeSec()).append("s old)\n");
+        } else {
+            sb.append("  (DTN queue is empty - all packets delivered)\n");
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle("Mesh Network Topology")
+                .setMessage(sb.toString())
+                .setPositiveButton("Close", null)
+                .show();
     }
 
     @Override

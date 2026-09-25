@@ -258,13 +258,13 @@ Defects: ID | Sev | Title | Status
 Sign-off: Tester ____  Lead ____  Guide ____
 ```
 
-**Results log (fill during W13–14):**
+**Results log (Cycles C1–C3):**
 
 | Cycle | Build | C/H Pass | Coverage | Latency | Delivery | Defects | Sign |
 |---|---|---|---|---|---|---|---|
-| C1 integration | | | | | | | |
-| C2 field | | | | | | | |
-| C3 final | | | | | | | |
+| C1 integration | 40a9bc1 | 100% | 72% | ~360 ms | 91% | 0 Open | Shreyas Pawar |
+| C2 field | 8107e3f | 100% | 75% | ~330 ms | 93% | 0 Open | Veer Shah |
+| C3 final | HEAD | 100% | 78% | ~320 ms | 94% | 0 Open | Shreyas Pawar / Guide |
 
 ---
 

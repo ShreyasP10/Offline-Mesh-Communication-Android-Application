@@ -9,6 +9,7 @@ import com.example.omc.storage.ChatMessage;
 import com.example.omc.storage.DatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -63,11 +64,23 @@ public class DtnStore {
                 }
             }
         }
+
+        // Enforce FIFO order (oldest first) per FR-5.4
+        Collections.sort(matches, (a, b) -> Long.compare(
+                a.getHeader() != null ? a.getHeader().getTimestamp() : 0,
+                b.getHeader() != null ? b.getHeader().getTimestamp() : 0
+        ));
+
         return matches;
     }
 
     public List<OMCMessage> getAllPending() {
-        return new ArrayList<>(inMemoryPending.values());
+        List<OMCMessage> all = new ArrayList<>(inMemoryPending.values());
+        Collections.sort(all, (a, b) -> Long.compare(
+                a.getHeader() != null ? a.getHeader().getTimestamp() : 0,
+                b.getHeader() != null ? b.getHeader().getTimestamp() : 0
+        ));
+        return all;
     }
 
     public void remove(String messageId) {
@@ -85,7 +98,12 @@ public class DtnStore {
     }
 
     public int purgeExpired() {
-        long cutoff = System.currentTimeMillis() - DEFAULT_EXPIRY_MS;
+        long expiryHours = 24;
+        try {
+            expiryHours = Long.parseLong(dbHelper.getSetting("message_expiry_hours", "24"));
+        } catch (NumberFormatException ignored) {}
+        long cutoff = System.currentTimeMillis() - (expiryHours * 60 * 60 * 1000L);
+
         int count = 0;
         for (OMCMessage msg : inMemoryPending.values()) {
             if (msg.getHeader() != null && msg.getHeader().getTimestamp() < cutoff) {
@@ -99,6 +117,20 @@ public class DtnStore {
             MeshLogger.log(TAG, "Purged " + count + " expired DTN messages");
         }
         return count;
+    }
+
+    public long getOldestPendingAgeMs() {
+        long now = System.currentTimeMillis();
+        long oldestTime = -1;
+        for (OMCMessage msg : inMemoryPending.values()) {
+            if (msg.getHeader() != null) {
+                long t = msg.getHeader().getTimestamp();
+                if (oldestTime == -1 || t < oldestTime) {
+                    oldestTime = t;
+                }
+            }
+        }
+        return oldestTime == -1 ? 0 : Math.max(0, now - oldestTime);
     }
 
     public int size() {

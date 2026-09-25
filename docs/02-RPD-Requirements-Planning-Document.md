@@ -76,12 +76,12 @@ Companion documents: `01-Project-Proposal-Synopsis.md` (what/why), `03-SRS` (req
 
 | Role | Person | Primary Responsibility | Secondary |
 |---|---|---|---|
-| Project Lead | ____ | Architecture, OMC/1.0 spec, integration, code reviews, guide liaison | Unblock anyone |
-| Android Dev 1 — Transport | ____ | `discovery/`, `connection/`, permissions, Nearby integration | Field-test lead |
-| Android Dev 2 — Network | ____ | `protocol/`, `mesh/` routing engine, DTN store, ACK, heartbeat | Protocol docs |
-| Android Dev 3 — App | ____ | `storage/` (Room), `service/`, `ui/` (Compose), settings, diagnostics | User manual, screenshots |
-| Test Engineer (rotating) | ____ (rotate per sprint) | Test plan execution, device matrix, bug triage, metrics | — |
-| Internal Guide | ____ | Weekly review, academic compliance, viva prep | — |
+| Project Lead | Shreyas Pawar | Architecture, OMC/1.0 spec, integration, code reviews, guide liaison | Unblock anyone |
+| Android Dev 1 — Transport | Veer Shah | `discovery/`, `connection/`, permissions, Nearby integration | Field-test lead |
+| Android Dev 2 — Network | Sayal Shah | `protocol/`, `mesh/` routing engine, DTN store, ACK, heartbeat | Protocol docs |
+| Android Dev 3 — App | Dhanashri Adawade | `storage/` (SQLite/Room), `service/`, `ui/`, settings, diagnostics | User manual, screenshots |
+| Test Engineer (rotating) | Rotating (Veer / Sayal / Dhanashri) | Test plan execution, device matrix, bug triage, metrics | — |
+| Internal Guide | Project Faculty Guide | Weekly review, academic compliance, viva prep | — |
 
 > **Rotation note:** The Test Engineer role rotates each sprint so knowledge spreads and no single person becomes a bottleneck.
 

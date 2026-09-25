@@ -25,6 +25,8 @@ public class HeartbeatManager {
     private final HeartbeatListener listener;
 
     private boolean running = false;
+    private long intervalMs = MeshConfig.HEARTBEAT_INTERVAL_MS;
+    private long timeoutMs = MeshConfig.PEER_TIMEOUT_MS;
 
     private final Runnable heartbeatRunnable = new Runnable() {
         @Override
@@ -35,7 +37,7 @@ public class HeartbeatManager {
                 listener.onSendHeartbeat();
             }
 
-            handler.postDelayed(this, MeshConfig.HEARTBEAT_INTERVAL_MS);
+            handler.postDelayed(this, intervalMs);
         }
     };
 
@@ -43,11 +45,25 @@ public class HeartbeatManager {
         this.listener = listener;
     }
 
+    public void setIntervalMs(long intervalMs) {
+        this.intervalMs = Math.max(2000L, Math.min(10000L, intervalMs));
+        this.timeoutMs = Math.max(2 * this.intervalMs, 3 * this.intervalMs);
+        MeshLogger.log(TAG, "Heartbeat interval updated to " + this.intervalMs + "ms, dead timeout: " + this.timeoutMs + "ms");
+    }
+
+    public long getIntervalMs() {
+        return intervalMs;
+    }
+
+    public long getTimeoutMs() {
+        return timeoutMs;
+    }
+
     public void start() {
         if (running) return;
         running = true;
-        handler.postDelayed(heartbeatRunnable, MeshConfig.HEARTBEAT_INTERVAL_MS);
-        MeshLogger.log(TAG, "HeartbeatManager started (interval: " + MeshConfig.HEARTBEAT_INTERVAL_MS + "ms)");
+        handler.postDelayed(heartbeatRunnable, intervalMs);
+        MeshLogger.log(TAG, "HeartbeatManager started (interval: " + intervalMs + "ms, timeout: " + timeoutMs + "ms)");
     }
 
     public void stop() {
@@ -61,7 +77,7 @@ public class HeartbeatManager {
 
         long now = System.currentTimeMillis();
         for (Peer peer : connectedPeers) {
-            if (peer.isConnected() && (now - peer.getLastSeen() > MeshConfig.PEER_TIMEOUT_MS)) {
+            if (peer.isConnected() && (now - peer.getLastSeen() > timeoutMs)) {
                 MeshLogger.log(TAG, "Peer " + peer.getName() + " timed out (" + (now - peer.getLastSeen()) + "ms)", "E");
                 if (listener != null) {
                     listener.onDeadPeerDetected(peer);

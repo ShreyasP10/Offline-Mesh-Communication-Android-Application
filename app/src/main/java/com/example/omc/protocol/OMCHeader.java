@@ -2,6 +2,9 @@ package com.example.omc.protocol;
 
 public class OMCHeader {
 
+    public static final int FLAG_ACK_REQUIRED = 1;
+    public static final int FLAG_SIGNED = 4;
+
     private String version;
     private String messageId;
     private String sourceId;
@@ -11,6 +14,7 @@ public class OMCHeader {
     private int hopCount;
     private long timestamp;
     private String ackForMessageId;
+    private int flags;
 
     public OMCHeader() {
         // Required by Gson
@@ -127,5 +131,13 @@ public class OMCHeader {
 
     public void setAckForMessageId(String ackForMessageId) {
         this.ackForMessageId = ackForMessageId;
+    }
+
+    public int getFlags() {
+        return flags;
+    }
+
+    public void setFlags(int flags) {
+        this.flags = flags;
     }
 }

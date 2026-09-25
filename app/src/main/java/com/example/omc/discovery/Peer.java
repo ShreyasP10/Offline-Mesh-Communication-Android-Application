@@ -48,6 +48,10 @@ public class Peer {
         return lastSeen;
     }
 
+    public void setLastSeen(long lastSeen) {
+        this.lastSeen = lastSeen;
+    }
+
     public void updateLastSeen() {
         this.lastSeen = System.currentTimeMillis();
     }

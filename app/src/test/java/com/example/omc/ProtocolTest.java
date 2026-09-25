@@ -93,4 +93,43 @@ public class ProtocolTest {
 
         assertNull(protocolManager.deserialize("invalid json string"));
     }
+
+    @Test
+    public void testOversizePayloadRejection() {
+        // FR-3.5 & FR-8.1: Messages > 4 KB must be rejected
+        StringBuilder hugeText = new StringBuilder();
+        for (int i = 0; i < 4100; i++) {
+            hugeText.append("A");
+        }
+        OMCMessage oversizeMsg = protocolManager.createMessage("src", "dst", MessageType.CHAT, hugeText.toString());
+        assertFalse("Message payload > 4 KB must fail validation", protocolManager.validate(oversizeMsg));
+    }
+
+    @Test
+    public void testTtlBoundsRejection() {
+        // SDD 6.4: TTL must be between 0 and 15
+        OMCMessage negativeTtl = protocolManager.createMessage("src", "dst", MessageType.CHAT, "hello");
+        negativeTtl.getHeader().setTtl(-1);
+        assertFalse(protocolManager.validate(negativeTtl));
+
+        OMCMessage highTtl = protocolManager.createMessage("src", "dst", MessageType.CHAT, "hello");
+        highTtl.getHeader().setTtl(20);
+        assertFalse(protocolManager.validate(highTtl));
+    }
+
+    @Test
+    public void testFlagsAndSignatureSerialization() {
+        OMCMessage msg = protocolManager.createMessage("node-1", "node-2", MessageType.CHAT, "secure text");
+        msg.getHeader().setFlags(OMCHeader.FLAG_ACK_REQUIRED | OMCHeader.FLAG_SIGNED);
+        msg.setSignature("dGVzdC1zaWduYXR1cmU=");
+
+        String json = protocolManager.serialize(msg);
+        assertNotNull(json);
+
+        OMCMessage deserialized = protocolManager.deserialize(json);
+        assertNotNull(deserialized);
+        assertEquals(OMCHeader.FLAG_ACK_REQUIRED | OMCHeader.FLAG_SIGNED, deserialized.getHeader().getFlags());
+        assertEquals("dGVzdC1zaWduYXR1cmU=", deserialized.getSignature());
+        assertTrue(protocolManager.validate(deserialized));
+    }
 }

@@ -90,6 +90,12 @@ public class ProtocolManager {
             return null;
         }
 
+        // Enforce maximum packet size of 8 KB (FR-8.1, NFR-P6)
+        if (json.length() > 8192) {
+            Log.e(TAG, "Packet exceeds maximum packet size limit (8 KB): " + json.length());
+            return null;
+        }
+
         try {
             OMCMessage message = gson.fromJson(json, OMCMessage.class);
             if (!validate(message)) {
@@ -130,7 +136,19 @@ public class ProtocolManager {
             return false;
         }
 
-        if (header.getTtl() < 0) {
+        if (header.getTtl() < 0 || header.getTtl() > 15) {
+            Log.e(TAG, "TTL out of bounds (0-15): " + header.getTtl());
+            return false;
+        }
+
+        if (header.getHopCount() < 0 || header.getHopCount() > 15) {
+            Log.e(TAG, "Hop count out of bounds (0-15): " + header.getHopCount());
+            return false;
+        }
+
+        // Enforce maximum application payload size of 4 KB (FR-3.5, NFR-P6)
+        if (message.getPayload() != null && message.getPayload().length() > 4096) {
+            Log.e(TAG, "Payload exceeds 4 KB limit: " + message.getPayload().length());
             return false;
         }
 

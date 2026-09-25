@@ -31,6 +31,24 @@ public class MeshForegroundService extends Service {
 
     private MeshManager meshManager;
 
+    private final android.content.BroadcastReceiver screenReceiver = new android.content.BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent == null) return;
+            if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
+                // Screen off: enter low-power duty cycle to conserve battery (FR-1.4)
+                if (meshManager != null) {
+                    meshManager.setLowPowerMode(true);
+                }
+            } else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
+                // Screen on: switch back to aggressive discovery (FR-1.4)
+                if (meshManager != null) {
+                    meshManager.setLowPowerMode(false);
+                }
+            }
+        }
+    };
+
     private final MeshManager.MeshListener meshListener = new MeshManager.MeshListener() {
         @Override
         public void onMeshStateChanged(boolean running) {
@@ -77,6 +95,11 @@ public class MeshForegroundService extends Service {
         createNotificationChannel();
         meshManager = MeshManager.getInstance(this);
         meshManager.addListener(meshListener);
+
+        android.content.IntentFilter filter = new android.content.IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(screenReceiver, filter);
     }
 
     @Override
@@ -168,6 +191,9 @@ public class MeshForegroundService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        try {
+            unregisterReceiver(screenReceiver);
+        } catch (Exception ignored) {}
         if (meshManager != null) {
             meshManager.removeListener(meshListener);
         }

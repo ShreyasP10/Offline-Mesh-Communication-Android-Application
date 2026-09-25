@@ -57,6 +57,8 @@ public class MeshManager {
     private final DtnStore dtnStore;
     private final AckManager ackManager;
     private final HeartbeatManager heartbeatManager;
+    private final com.example.omc.security.MessageSigner messageSigner;
+    private final com.example.omc.security.MessageVerifier messageVerifier;
 
     private final List<Peer> discoveredPeers = new CopyOnWriteArrayList<>();
     private final Map<String, String> endpointToNodeId = new ConcurrentHashMap<>();
@@ -103,6 +105,8 @@ public class MeshManager {
         this.seenPacketCache = new SeenPacketCache(1000);
         this.dtnStore = new DtnStore(this.context);
         this.ackManager = new AckManager();
+        this.messageSigner = new com.example.omc.security.MessageSigner();
+        this.messageVerifier = new com.example.omc.security.MessageVerifier();
 
         this.connectionManager = new ConnectionManager(this.context, localNode);
 
@@ -206,6 +210,11 @@ public class MeshManager {
         );
         discoveryManager.startDiscovery();
 
+        long hbSec = 4;
+        try {
+            hbSec = Long.parseLong(dbHelper.getSetting("heartbeat_interval_sec", "4"));
+        } catch (NumberFormatException ignored) {}
+        heartbeatManager.setIntervalMs(hbSec * 1000L);
         heartbeatManager.start();
 
         notifyMeshStateChanged(true);
@@ -339,6 +348,14 @@ public class MeshManager {
         );
         message.getHeader().setMessageId(messageId);
 
+        // Sign message if per-message signing is enabled (FR-8.2)
+        boolean signMessages = Boolean.parseBoolean(dbHelper.getSetting("sign_messages", "false"));
+        if (signMessages) {
+            String signature = messageSigner.sign(message);
+            message.setSignature(signature);
+            message.getHeader().setFlags(message.getHeader().getFlags() | OMCHeader.FLAG_SIGNED);
+        }
+
         // Add to seen cache so we don't process our own broadcast if echoed
         seenPacketCache.add(messageId);
 
@@ -384,6 +401,14 @@ public class MeshManager {
                         m.getText()
                 );
                 omcMsg.getHeader().setMessageId(messageId);
+
+                boolean signMessages = Boolean.parseBoolean(dbHelper.getSetting("sign_messages", "false"));
+                if (signMessages) {
+                    String signature = messageSigner.sign(omcMsg);
+                    omcMsg.setSignature(signature);
+                    omcMsg.getHeader().setFlags(omcMsg.getHeader().getFlags() | OMCHeader.FLAG_SIGNED);
+                }
+
                 m.setStatus(ChatMessage.STATUS_SENT);
                 dbHelper.updateMessageStatus(messageId, ChatMessage.STATUS_SENT);
                 notifyMessageStatusChanged(messageId, ChatMessage.STATUS_SENT);
@@ -412,6 +437,20 @@ public class MeshManager {
         String messageId = header.getMessageId();
         String sourceId = header.getSourceId();
         String destinationId = header.getDestinationId();
+
+        // Verify signature if packet is signed or signing is enforced (FR-8.2)
+        if (message.getSignature() != null && !message.getSignature().isEmpty()) {
+            boolean valid = messageVerifier.verify(message);
+            if (!valid) {
+                malformedDropsCounter.incrementAndGet();
+                MeshLogger.log(TAG, "SECURITY ALERT: Signature verification failed for packet " + messageId + " from " + sourceId, "E");
+                return;
+            }
+        } else if (Boolean.parseBoolean(dbHelper.getSetting("sign_messages", "false")) && header.getMessageType() == MessageType.CHAT) {
+            malformedDropsCounter.incrementAndGet();
+            MeshLogger.log(TAG, "SECURITY ALERT: Dropped unsigned chat packet (signing enforced): " + messageId, "E");
+            return;
+        }
 
         // Dedup check (SeenPacketCache)
         if (seenPacketCache.isDuplicate(messageId)) {
@@ -719,7 +758,21 @@ public class MeshManager {
         return dtnStore.size();
     }
 
+    public long getDtnOldestPendingAgeSec() {
+        return dtnStore.getOldestPendingAgeMs() / 1000L;
+    }
+
     public int getRoutingTableSize() {
         return routingManager.getRoutingTable().size();
+    }
+
+    public List<com.example.omc.routing.Route> getRoutingTableRoutes() {
+        return routingManager.getRoutingTable().getAllRoutes();
+    }
+
+    public void setLowPowerMode(boolean lowPower) {
+        if (discoveryManager != null && connectionManager != null) {
+            discoveryManager.setLowPowerMode(lowPower, connectionManager.getConnectionLifecycleCallback());
+        }
     }
 }
