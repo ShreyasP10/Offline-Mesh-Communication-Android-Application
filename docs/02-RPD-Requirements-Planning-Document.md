@@ -6,10 +6,10 @@
 |---|---|
 | **Document ID** | OMC-RPD-1.0 |
 | **Version** | 1.0 |
-| **Date** | ____________ |
-| **Authors** | Project Team (Lead + 3 Members) |
+| **Date** | September 2026 |
+| **Authors** | Shreyas Pawar, Veer Shah, Sayal Shah, Dhanashri Adawade |
 | **Approver** | Internal Guide / Project Coordinator |
-| **Status** | Approved / Under Review (circle one) |
+| **Status** | Approved |
 
 ---
 

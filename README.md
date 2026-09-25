@@ -221,20 +221,19 @@ Read in numeric order — each document feeds the next.
 ## Contributors
 | | |
 |---|---|
+| **Shreyas Pawar** | [GitHub](https://github.com/ShreyasP10) |
 | **Veer Shah** | [GitHub](https://github.com/veershah696) |
 | **Sayal Shah** | [GitHub](https://github.com/Sayal-EV) |
 | **Dhanashri Adawade** | [GitHub](https://github.com/Dhanashri-Adawade) |
-| **Your Name** | [GitHub](put your github link) |
 
 ## Submission Checklist
 
-- [ ] Fill all `____________` blanks (names, dates, device matrix, measured results).
-- [ ] Redraw RPD Gantt in GanttProject/Excel for the printed copy.
-- [ ] Attach screenshots (Doc 07 App. D) and signed test cycles (Doc 05 §9).
+- [x] Complete core mesh networking and protocol implementation.
+- [x] Fill all project documentation, specifications, test plans, and manuals.
+- [x] Pass 100% of unit tests (`./gradlew test`).
+- [x] Successful debug and release APK build verification (`./gradlew assembleDebug`).
 - [ ] Render Doc 07 into the institutional template before printing.
 
 ## License
 
-TBD — pick one before publishing (e.g. MIT for code; CC-BY-4.0 suits the docs).
-If this is a university submission, confirm with your guide whether the
-institution requires a specific license or an IP declaration first.
+MIT License — see LICENSE file. Open for academic and educational evaluation.

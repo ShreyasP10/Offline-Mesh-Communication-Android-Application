@@ -9,16 +9,27 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Toolbar with Back Button -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:gravity="center_vertical"
-            android:paddingStart="20dp"
+            android:paddingStart="16dp"
             android:background="#1976D2">
+
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_media_previous"
+                android:tint="#FFFFFF"
+                android:contentDescription="Back" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="Settings"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
@@ -26,19 +37,23 @@
 
         </LinearLayout>
 
+        <!-- Mesh Configuration Switches -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:text="Mesh Configuration"
+            android:paddingStart="20dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="8dp"
+            android:text="Mesh Operation"
             android:textColor="#1976D2"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <Switch
             android:id="@+id/autoDiscoverySwitch"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="52dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="Automatic Discovery"
@@ -47,7 +62,7 @@
         <Switch
             android:id="@+id/advertisingSwitch"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="52dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="Device Advertising"
@@ -56,37 +71,94 @@
         <Switch
             android:id="@+id/forwardingSwitch"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="52dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Message Forwarding"
+            android:text="Multi-Hop Packet Forwarding"
             android:textSize="15sp" />
 
         <Switch
             android:id="@+id/storeForwardSwitch"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="52dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="Store and Forward"
+            android:text="Store-and-Forward (DTN)"
             android:textSize="15sp" />
 
+        <Switch
+            android:id="@+id/bootAutoStartSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Auto-Start Mesh on Boot (FR-9.2)"
+            android:textSize="15sp" />
+
+        <Switch
+            android:id="@+id/signMessagesSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Sign Messages (Security FR-8.2)"
+            android:textSize="15sp" />
+
+        <!-- Protocol & Timing Parameters -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:text="Device"
+            android:paddingStart="20dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="8dp"
+            android:text="Protocol &amp; Timing Parameters (FR-10.2)"
             android:textColor="#1976D2"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/deviceNameText"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:paddingStart="20dp"
-            android:text="Device Name: --"
+            android:paddingEnd="20dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="Device Name: -- (Tap to edit)"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/ttlSettingText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="Max TTL (Hops): 8 (Tap to edit)"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/heartbeatSettingText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="Heartbeat Interval: 4 s (Tap to edit)"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/expirySettingText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="Message Expiry: 24 h (Tap to edit)"
             android:textSize="15sp" />
 
         <Button
@@ -94,7 +166,7 @@
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_margin="20dp"
-            android:text="Reset Settings" />
+            android:text="Reset to Defaults" />
 
     </LinearLayout>
 

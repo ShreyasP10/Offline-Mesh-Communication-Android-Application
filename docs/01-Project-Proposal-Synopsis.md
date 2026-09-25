@@ -10,13 +10,13 @@
 | **Project Type** | Final Year Major Project (B.E. / B.Tech) |
 | **Duration** | 16 Weeks (One Semester) |
 | **Team Size** | 4 Members |
-| **Guide** | ____________ (Designation, Department) |
-| **Institution** | ____________ |
+| **Guide** | Faculty Guide (Computer Engineering Department) |
+| **Institution** | Department of Computer Engineering |
 | **Academic Year** | 2025–26 |
 | **Version** | 1.0 — Submitted for Faculty / Committee Approval |
-| **Date** | ____________ |
+| **Date** | September 2026 |
 
-> **How to use this document:** Fill in the blanks (names, enrollment numbers, institution). Submit as-is for synopsis approval. Do not edit the technical scope without guide approval once signed.
+> **How to use this document:** Submit as-is for synopsis approval. Technical scope mirrors implementation and SDD.
 
 ---
 
@@ -30,14 +30,13 @@
 
 ## 2. Team Composition
 
-| Role | Name | Enrollment No. | Responsibility (Proposed) |
+| Role | Name | Enrollment No. | Responsibility |
 |---|---|---|---|
-| Team Lead | ____________ | ____________ | Architecture, protocol spec, integration |
-| Member 2 | ____________ | ____________ | Discovery + connection module |
-| Member 3 | ____________ | ____________ | Routing + DTN store-and-forward |
-| Member 4 | ____________ | ____________ | UI + storage + testing |
-| Internal Guide | ____________ | — | Weekly review, academic direction |
-| External Mentor (if any) | ____________ | — | Industry feedback |
+| Team Lead | Shreyas Pawar | Core Lead | Architecture, protocol spec, integration |
+| Member 2 | Veer Shah | Developer | Discovery + connection module |
+| Member 3 | Sayal Shah | Developer | Routing + DTN store-and-forward |
+| Member 4 | Dhanashri Adawade | Developer | UI + storage + testing |
+| Internal Guide | Project Faculty Guide | — | Weekly review, academic direction |
 
 ---
 

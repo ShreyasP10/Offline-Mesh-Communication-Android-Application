@@ -6,7 +6,7 @@
 |---|---|
 | **Document ID** | OMC-DEPLOY-1.0 |
 | **Version** | 1.0 |
-| **Date** | ____________ |
+| **Date** | September 2026 |
 | **Audience** | Developers, testers, end users, evaluators |
 | **Applies To** | APK `v1.0` / source at tag `v1.0-final` |
 

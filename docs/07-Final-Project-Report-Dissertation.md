@@ -5,14 +5,14 @@
 | Field | Detail |
 |---|---|
 | **Document ID** | OMC-DISS-1.0 |
-| **Degree** | Bachelor of Engineering / Technology (____________) |
-| **Department** | ____________ |
-| **Institution** | ____________ |
+| **Degree** | Bachelor of Engineering / Technology (Computer Engineering) |
+| **Department** | Department of Computer Engineering |
+| **Institution** | Department of Computer Engineering |
 | **Academic Year** | 2025–26 |
-| **Team** | ____ (Lead), ____, ____, ____ — Enrollment Nos. ____ |
-| **Internal Guide** | ____ (Designation) |
-| **External Examiner** | ____________ |
-| **Date of Submission** | ____________ |
+| **Team** | Shreyas Pawar (Lead), Veer Shah, Sayal Shah, Dhanashri Adawade |
+| **Internal Guide** | Project Faculty Guide |
+| **External Examiner** | External Project Examiner |
+| **Date of Submission** | September 2026 |
 
 > **Formatting note:** Render into the institutional template (Times New Roman 12, 1.5 spacing, 1.5" left margin, IEEE references, numbered figures/tables) before printing. This markdown is the complete content master.
 
@@ -23,10 +23,10 @@
 ### Title Page
 
 > OMC: A Decentralized Offline Mesh Communication System for Android Devices
-> A Project Report Submitted in Partial Fulfillment of the Requirements for the Degree of Bachelor of Engineering / Technology in ____________
-> By [Names + Enrollment Nos.]
-> Under the Guidance of [Guide Name]
-> Department of ____________, [Institution], [Year]
+> A Project Report Submitted in Partial Fulfillment of the Requirements for the Degree of Bachelor of Engineering / Technology in Computer Engineering
+> By Shreyas Pawar, Veer Shah, Sayal Shah, Dhanashri Adawade
+> Under the Guidance of Project Faculty Guide
+> Department of Computer Engineering, 2025–26
 
 ### Certificate
 

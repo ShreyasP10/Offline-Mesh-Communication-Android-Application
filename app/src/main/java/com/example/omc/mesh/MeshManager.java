@@ -62,6 +62,10 @@ public class MeshManager {
     private final Map<String, String> endpointToNodeId = new ConcurrentHashMap<>();
     private final Map<String, String> nodeIdToEndpoint = new ConcurrentHashMap<>();
 
+    private final java.util.concurrent.atomic.AtomicInteger dupDropsCounter = new java.util.concurrent.atomic.AtomicInteger(0);
+    private final java.util.concurrent.atomic.AtomicInteger ttlDropsCounter = new java.util.concurrent.atomic.AtomicInteger(0);
+    private final java.util.concurrent.atomic.AtomicInteger malformedDropsCounter = new java.util.concurrent.atomic.AtomicInteger(0);
+
     private final List<MeshListener> listeners = new CopyOnWriteArrayList<>();
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
@@ -399,6 +403,7 @@ public class MeshManager {
         OMCMessage message = protocolManager.parseFromTransport(json);
 
         if (message == null || message.getHeader() == null) {
+            malformedDropsCounter.incrementAndGet();
             MeshLogger.log(TAG, "Dropped malformed or invalid packet from " + incomingEndpoint, "E");
             return;
         }
@@ -410,6 +415,7 @@ public class MeshManager {
 
         // Dedup check (SeenPacketCache)
         if (seenPacketCache.isDuplicate(messageId)) {
+            dupDropsCounter.incrementAndGet();
             MeshLogger.log(MeshConfig.LOG_ROUTE, "Duplicate packet dropped: " + messageId);
             return;
         }
@@ -431,7 +437,7 @@ public class MeshManager {
                 break;
 
             case ACK:
-                handleAck(header, message.getPayload());
+                handleAck(incomingEndpoint, message);
                 break;
 
             case CHAT:
@@ -463,18 +469,30 @@ public class MeshManager {
         notifyPeersUpdated();
     }
 
-    private void handleAck(OMCHeader header, String payload) {
+    private void handleAck(String incomingEndpoint, OMCMessage message) {
+        OMCHeader header = message.getHeader();
         String ackTarget = header.getAckForMessageId();
         if (ackTarget == null || ackTarget.isEmpty()) {
+            String payload = message.getPayload();
             if (payload != null && payload.startsWith("ACK:")) {
                 ackTarget = payload.substring(4);
             }
         }
 
-        if (ackTarget != null) {
-            ackManager.onAckReceived(ackTarget);
-            dbHelper.updateMessageStatus(ackTarget, ChatMessage.STATUS_DELIVERED);
-            notifyMessageStatusChanged(ackTarget, ChatMessage.STATUS_DELIVERED);
+        if (localNode.getNodeId().equals(header.getDestinationId())) {
+            if (ackTarget != null) {
+                ackManager.onAckReceived(ackTarget);
+                dbHelper.updateMessageStatus(ackTarget, ChatMessage.STATUS_DELIVERED);
+                notifyMessageStatusChanged(ackTarget, ChatMessage.STATUS_DELIVERED);
+            }
+        } else if (header.getTtl() > 1) {
+            // Relays forward ACKs like DATA (FR-6.4)
+            header.setTtl(header.getTtl() - 1);
+            header.setHopCount(header.getHopCount() + 1);
+            MeshLogger.log(MeshConfig.LOG_ROUTE, "Relaying ACK packet " + header.getMessageId() + " toward " + header.getDestinationId());
+            transmitPacket(message, incomingEndpoint);
+        } else {
+            ttlDropsCounter.incrementAndGet();
         }
     }
 
@@ -679,5 +697,29 @@ public class MeshManager {
                 try { l.onMessageStatusChanged(messageId, status); } catch (Exception ignored) {}
             }
         });
+    }
+
+    public int getDupDropsCount() {
+        return dupDropsCounter.get();
+    }
+
+    public int getTtlDropsCount() {
+        return ttlDropsCounter.get();
+    }
+
+    public int getMalformedDropsCount() {
+        return malformedDropsCounter.get();
+    }
+
+    public int getSeenCacheSize() {
+        return seenPacketCache.size();
+    }
+
+    public int getDtnPendingCount() {
+        return dtnStore.size();
+    }
+
+    public int getRoutingTableSize() {
+        return routingManager.getRoutingTable().size();
     }
 }

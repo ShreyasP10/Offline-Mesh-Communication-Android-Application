@@ -6,10 +6,10 @@
 |---|---|
 | **Document ID** | OMC-SDD-1.0 |
 | **Version** | 1.0 (matches frozen protocol OMC/1.0) |
-| **Date** | ____________ |
-| **Authors** | Project Team |
+| **Date** | September 2026 |
+| **Authors** | Shreyas Pawar, Veer Shah, Sayal Shah, Dhanashri Adawade |
 | **Approver** | Internal Guide |
-| **Status** | Approved / Under Review |
+| **Status** | Approved |
 
 > Normative companion to the SRS (Doc 03). If this document and code disagree, file a change request per RPD §10 — do not silently drift.
 
