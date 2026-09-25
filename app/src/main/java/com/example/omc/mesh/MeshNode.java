@@ -5,7 +5,7 @@ import java.util.UUID;
 public class MeshNode {
 
     private final String nodeId;
-    private final String nodeName;
+    private String nodeName;
 
     public MeshNode(String nodeName) {
         this.nodeId = UUID.randomUUID().toString();
@@ -23,6 +23,10 @@ public class MeshNode {
 
     public String getNodeName() {
         return nodeName;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
     }
 
     @Override

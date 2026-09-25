@@ -74,8 +74,8 @@ Planned for v1 (see SRS [`docs/03`](docs/03-SRS-Software-Requirements-Specificat
 | Area | State |
 |---|---|
 | Academic docs (proposal → dissertation) | ✅ Complete in [`docs/`](docs/) |
-| Android Java boilerplate (`com.example.omc`, minSdk 26) | ✅ Builds, runs, shows placeholder |
-| Mesh implementation (discovery → ACK) | ⬜ Next — per SDD module map |
+| Android Java boilerplate (`com.example.omc`, minSdk 26) | ✅ Complete |
+| Mesh implementation (discovery → ACK → DTN → Service) | ✅ Complete (Sprints 1–4 fully implemented) |
 
 ## Tech Stack
 
@@ -202,10 +202,11 @@ Read in numeric order — each document feeds the next.
 ## Roadmap
 
 - [x] Docs 01–07 + Java boilerplate
-- [ ] Discovery + connection (Sprint 1) → 2-phone visibility
-- [ ] 1-hop chat (Sprint 2) → offline texting + mid review
-- [ ] Flooding multi-hop + DTN store-and-forward (Sprint 3)
-- [ ] ACK + heartbeat/self-heal + foreground service (Sprint 4)
+- [x] Discovery + connection (Sprint 1) → 2-phone visibility
+- [x] 1-hop chat (Sprint 2) → offline texting + mid review
+- [x] Flooding multi-hop + DTN store-and-forward (Sprint 3)
+- [x] ACK + heartbeat/self-heal + foreground service (Sprint 4)
+- [x] UI screens (Home, Chat, Peers, Logs, Settings) + SQLite storage
 - [ ] Field testing, metrics, dissertation print, viva demo (Wks 13–16)
 - Future (v2): AODV routing · end-to-end encryption · iOS bridge · media/voice notes · LoRa gateway
 
