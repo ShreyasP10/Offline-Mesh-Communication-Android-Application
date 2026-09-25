@@ -94,7 +94,9 @@ public class MeshManager {
 
         connectionManager.start();
 
-        discoveryManager.startAdvertising();
+        discoveryManager.startAdvertising(
+                connectionManager.getConnectionLifecycleCallback()
+        );
         discoveryManager.startDiscovery();
 
         Log.d(TAG, "Mesh started");

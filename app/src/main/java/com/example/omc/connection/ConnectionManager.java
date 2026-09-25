@@ -257,6 +257,10 @@ public class ConnectionManager {
         );
     }
 
+    public ConnectionLifecycleCallback getConnectionLifecycleCallback() {
+        return connectionLifecycleCallback;
+    }
+
     private final ConnectionLifecycleCallback
             connectionLifecycleCallback =
             new ConnectionLifecycleCallback() {
