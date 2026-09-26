@@ -64,8 +64,11 @@
 
 ---
 
-### 👥 Contributors
-- **Shreyas Pawar** (Project Lead / Architecture)
-- **Veer Shah** (Transport & Link Management)
-- **Sayal Shah** (Protocol & Routing Engine)
+### 👥 Project Team
+- **Veer Shah** (Team Leader / Transport & Link Management)
 - **Dhanashri Adawade** (Persistence, Service & UI)
+- **Sayal Shah** (Protocol & Routing Engine)
+- **Manav Vora** (Testing, Field Verification & QA)
+
+### 🌟 Special Contributor & Mentor
+- **Shreyas Pawar** (Special Friend / Technical Advisor — architecture assistance & advisory support; not a formal team member)

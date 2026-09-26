@@ -7,7 +7,7 @@
 | **Document ID** | OMC-TEST-1.0 |
 | **Version** | 1.0 |
 | **Date** | September 2026 |
-| **Authors** | Shreyas Pawar, Veer Shah, Sayal Shah, Dhanashri Adawade |
+| **Authors** | Veer Shah (Leader), Dhanashri Adawade, Sayal Shah, Manav Vora (Special assistance: Shreyas Pawar) |
 | **Approver** | Internal Guide |
 
 ---
@@ -88,10 +88,11 @@ Suspend a cycle if: > 3 critical crashes in 1 hr, radios unusable (venue interfe
 
 | ID | Model | API | OEM | BLE | Direct | Battery % | Tester |
 |---|---|---|---|---|---|---|---|
-| D-1 | Pixel 7 | 34 | Google | 5.2 | Yes | 85% | Shreyas Pawar |
-| D-2 | Galaxy S21 | 33 | Samsung | 5.0 | Yes | 90% | Veer Shah |
+| D-1 | Galaxy S21 | 33 | Samsung | 5.0 | Yes | 90% | Veer Shah (Leader) |
+| D-2 | Pixel 7 | 34 | Google | 5.2 | Yes | 85% | Manav Vora |
 | D-3 | Redmi Note 11 | 31 | Xiaomi | 5.0 | Yes | 78% | Sayal Shah |
 | D-4 | OnePlus Nord | 32 | OnePlus | 5.1 | Yes | 82% | Dhanashri Adawade |
+| D-5 | Realme 9 | 33 | Realme | 5.1 | Yes | 85% | Shreyas Pawar (Advisory Device) |
 
 ---
 
@@ -262,9 +263,9 @@ Sign-off: Tester ____  Lead ____  Guide ____
 
 | Cycle | Build | C/H Pass | Coverage | Latency | Delivery | Defects | Sign |
 |---|---|---|---|---|---|---|---|
-| C1 integration | 40a9bc1 | 100% | 72% | ~360 ms | 91% | 0 Open | Shreyas Pawar |
-| C2 field | 8107e3f | 100% | 75% | ~330 ms | 93% | 0 Open | Veer Shah |
-| C3 final | HEAD | 100% | 78% | ~320 ms | 94% | 0 Open | Shreyas Pawar / Guide |
+| C1 integration | 40a9bc1 | 100% | 72% | ~360 ms | 91% | 0 Open | Veer Shah |
+| C2 field | 8107e3f | 100% | 75% | ~330 ms | 93% | 0 Open | Manav Vora |
+| C3 final | HEAD | 100% | 78% | ~320 ms | 94% | 0 Open | Veer Shah / Guide |
 
 ---
 

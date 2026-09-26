@@ -7,7 +7,7 @@
 | **Document ID** | OMC-SDD-1.0 |
 | **Version** | 1.0 (matches frozen protocol OMC/1.0) |
 | **Date** | September 2026 |
-| **Authors** | Shreyas Pawar, Veer Shah, Sayal Shah, Dhanashri Adawade |
+| **Authors** | Veer Shah (Leader), Dhanashri Adawade, Sayal Shah, Manav Vora (Special assistance: Shreyas Pawar) |
 | **Approver** | Internal Guide |
 | **Status** | Approved |
 

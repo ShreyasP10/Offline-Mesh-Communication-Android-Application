@@ -9,7 +9,7 @@
 | **Department** | Department of Computer Engineering |
 | **Institution** | Department of Computer Engineering |
 | **Academic Year** | 2025–26 |
-| **Team** | Shreyas Pawar (Lead), Veer Shah, Sayal Shah, Dhanashri Adawade |
+| **Team** | Veer Shah (Leader), Dhanashri Adawade, Sayal Shah, Manav Vora |
 | **Internal Guide** | Project Faculty Guide |
 | **External Examiner** | External Project Examiner |
 | **Date of Submission** | September 2026 |
@@ -24,21 +24,21 @@
 
 > OMC: A Decentralized Offline Mesh Communication System for Android Devices
 > A Project Report Submitted in Partial Fulfillment of the Requirements for the Degree of Bachelor of Engineering / Technology in Computer Engineering
-> By Shreyas Pawar, Veer Shah, Sayal Shah, Dhanashri Adawade
+> By Veer Shah (Leader), Dhanashri Adawade, Sayal Shah, Manav Vora
 > Under the Guidance of Project Faculty Guide
 > Department of Computer Engineering, 2025–26
 
 ### Certificate
 
-> Certified that this project report titled "..." is the bonafide work of [Names] who carried out the project under my supervision. (Signatures: Guide, HOD, Principal, External.)
+> Certified that this project report titled "OMC: A Decentralized Offline Mesh Communication System for Android Devices" is the bonafide work of Veer Shah, Dhanashri Adawade, Sayal Shah, and Manav Vora who carried out the project under my supervision. (Signatures: Guide, HOD, Principal, External.)
 
 ### Declaration
 
-> We declare that this report is our original work, has not been submitted elsewhere, and all sources are cited. (Signatures + date.)
+> We declare that this report is our original work, has not been submitted elsewhere, and all sources are cited. (Signatures: Veer Shah, Dhanashri Adawade, Sayal Shah, Manav Vora.)
 
 ### Acknowledgement
 
-> Thanks to guide, department, test volunteers who lent phones, open-source projects (Android, Nearby Connections, Room), and families.
+> Thanks to our internal guide, department, faculty, and test volunteers who lent phones. We express our deepest gratitude to our special friend **Shreyas Pawar** for his invaluable technical guidance, architecture consultation, and steadfast support to our team throughout the development of this project. Special thanks to open-source projects (Android, Nearby Connections, Gson) and our families.
 
 ### Abstract
 

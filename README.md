@@ -226,13 +226,20 @@ Read in numeric order — each document feeds the next.
 4. Never change the OMC/1.0 packet format without a written change request (RPD §10).
 
 
-## Contributors
-| | |
-|---|---|
-| **Shreyas Pawar** | [GitHub](https://github.com/ShreyasP10) |
-| **Veer Shah** | [GitHub](https://github.com/veershah696) |
-| **Sayal Shah** | [GitHub](https://github.com/Sayal-EV) |
-| **Dhanashri Adawade** | [GitHub](https://github.com/Dhanashri-Adawade) |
+## Team Members & Contributors
+
+### 👥 Project Team
+| Member | Role | Profile |
+|---|---|---|
+| **Veer Shah** | **Team Leader** | [GitHub](https://github.com/veershah696) |
+| **Dhanashri Adawade** | Team Member | [GitHub](https://github.com/Dhanashri-Adawade) |
+| **Sayal Shah** | Team Member | [GitHub](https://github.com/Sayal-EV) |
+| **Manav Vora** | Team Member | [GitHub](https://github.com/manavvora) |
+
+### 🌟 Special Contributor & Mentor
+| Contributor | Role | Profile |
+|---|---|---|
+| **Shreyas Pawar** | **Special Friend / Technical Advisor** *(Not a formal team member; provided architecture guidance, technical assistance, and support)* | [GitHub](https://github.com/ShreyasP10) |
 
 ## Submission Checklist
 

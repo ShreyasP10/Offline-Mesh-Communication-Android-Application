@@ -7,7 +7,7 @@
 | **Document ID** | OMC-RPD-1.0 |
 | **Version** | 1.0 |
 | **Date** | September 2026 |
-| **Authors** | Shreyas Pawar, Veer Shah, Sayal Shah, Dhanashri Adawade |
+| **Authors** | Veer Shah (Leader), Dhanashri Adawade, Sayal Shah, Manav Vora (Special assistance: Shreyas Pawar) |
 | **Approver** | Internal Guide / Project Coordinator |
 | **Status** | Approved |
 
@@ -76,26 +76,24 @@ Companion documents: `01-Project-Proposal-Synopsis.md` (what/why), `03-SRS` (req
 
 | Role | Person | Primary Responsibility | Secondary |
 |---|---|---|---|
-| Project Lead | Shreyas Pawar | Architecture, OMC/1.0 spec, integration, code reviews, guide liaison | Unblock anyone |
-| Android Dev 1 — Transport | Veer Shah | `discovery/`, `connection/`, permissions, Nearby integration | Field-test lead |
-| Android Dev 2 — Network | Sayal Shah | `protocol/`, `mesh/` routing engine, DTN store, ACK, heartbeat | Protocol docs |
-| Android Dev 3 — App | Dhanashri Adawade | `storage/` (SQLite/Room), `service/`, `ui/`, settings, diagnostics | User manual, screenshots |
-| Test Engineer (rotating) | Rotating (Veer / Sayal / Dhanashri) | Test plan execution, device matrix, bug triage, metrics | — |
-| Internal Guide | Project Faculty Guide | Weekly review, academic compliance, viva prep | — |
-
-> **Rotation note:** The Test Engineer role rotates each sprint so knowledge spreads and no single person becomes a bottleneck.
+| **Team Leader** | **Veer Shah** | Overall project coordination, `discovery/`, `connection/`, permissions, guide liaison | Field-test lead |
+| **Android Dev — App & UI** | **Dhanashri Adawade** | `storage/` (SQLite/Room), `service/`, `ui/`, settings, diagnostics | User manual, screenshots |
+| **Android Dev — Network** | **Sayal Shah** | `protocol/`, `mesh/` routing engine, DTN store, ACK, heartbeat | Protocol docs |
+| **Test & QA Engineer** | **Manav Vora** | Test plan execution, device matrix, bug triage, metrics | Integration testing |
+| **Special Friend / Advisor** | **Shreyas Pawar** | Architecture consultation, technical mentoring, and advisory help *(not a formal team member)* | Code review advice |
+| **Internal Guide** | Project Faculty Guide | Weekly review, academic compliance, viva prep | — |
 
 ### 3.2 RACI Matrix (Key Activities)
 
-| Activity | Lead | Dev 1 | Dev 2 | Dev 3 | Guide |
+| Activity | Veer (Lead) | Dhanashri (Dev) | Sayal (Dev) | Manav (QA) | Guide |
 |---|---|---|---|---|---|
 | Freeze OMC/1.0 spec | A/R | C | R | C | A |
-| Discovery module | A | R | C | I | I |
-| Routing + DTN | A | C | R | C | I |
-| UI + storage | A | I | C | R | I |
-| Test report sign-off | R | R | R | R | A |
+| Discovery module | A/R | I | C | R | I |
+| Routing + DTN | A | C | R | R | I |
+| UI + storage | A | R | C | R | I |
+| Test report sign-off | R | R | R | A/R | A |
 | Final dissertation | R | R | R | R | A |
-| Viva demo | R | R | R | R | C |
+| Viva demo | A/R | R | R | R | C |
 
 *R = Responsible, A = Accountable, C = Consulted, I = Informed.*
 

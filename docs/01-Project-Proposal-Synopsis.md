@@ -32,11 +32,12 @@
 
 | Role | Name | Enrollment No. | Responsibility |
 |---|---|---|---|
-| Team Lead | Shreyas Pawar | Core Lead | Architecture, protocol spec, integration |
-| Member 2 | Veer Shah | Developer | Discovery + connection module |
-| Member 3 | Sayal Shah | Developer | Routing + DTN store-and-forward |
-| Member 4 | Dhanashri Adawade | Developer | UI + storage + testing |
-| Internal Guide | Project Faculty Guide | — | Weekly review, academic direction |
+| **Team Leader** | **Veer Shah** | Member 1 | Project coordination, discovery & connection module |
+| **Team Member** | **Dhanashri Adawade** | Member 2 | UI, local SQLite storage & foreground service |
+| **Team Member** | **Sayal Shah** | Member 3 | OMC/1.0 protocol, multi-hop routing & DTN store-and-forward |
+| **Team Member** | **Manav Vora** | Member 4 | Testing, field verification & quality assurance |
+| **Special Friend / Mentor** | **Shreyas Pawar** | Advisory | External technical assistance & architecture guidance *(not a formal team member)* |
+| **Internal Guide** | Project Faculty Guide | — | Weekly review, academic direction |
 
 ---
 
