@@ -2,95 +2,128 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FA">
+    android:background="@color/neu_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
 
+        <!-- Neumorphic Header Card -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:background="#1976D2">
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="12dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/bg_neu_card">
 
             <ImageButton
                 android:id="@+id/backButton"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:background="@android:color/transparent"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_neu_circle_btn"
                 android:src="@android:drawable/ic_media_previous"
-                android:tint="#FFFFFF"
+                android:tint="@color/neu_text_primary"
                 android:contentDescription="Back" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="12dp"
                 android:text="Peer Details"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+        <!-- Neumorphic Hero Avatar -->
+        <FrameLayout
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/ic_mesh"
-            android:contentDescription="Peer"
-            android:tint="#1976D2" />
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_neu_avatar">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_mesh"
+                android:contentDescription="Peer Avatar"
+                android:tint="@color/neu_primary" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/peerName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="14dp"
             android:gravity="center"
             android:text="Peer Device"
-            android:textColor="#212121"
-            android:textSize="22sp"
+            android:textColor="@color/neu_text_primary"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/peerStatus"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="6dp"
-            android:gravity="center"
+            android:paddingStart="14dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="4dp"
+            android:background="@drawable/bg_neu_pill_green"
             android:text="Connected"
-            android:textColor="#388E3C"
-            android:textSize="14sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
+        <!-- Neumorphic Device Information Card -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:orientation="vertical"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="20dp"
             android:padding="18dp"
-            android:background="@drawable/bg_message">
+            android:orientation="vertical"
+            android:background="@drawable/bg_neu_card">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Device Information"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#212121" />
+                android:textColor="@color/neu_text_primary" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/neu_border" />
 
             <TextView
                 android:id="@+id/peerId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
                 android:text="Peer ID: --"
-                android:textSize="15sp"
-                android:textColor="#555555" />
+                android:textSize="13sp"
+                android:textColor="@color/neu_text_secondary" />
 
             <TextView
                 android:id="@+id/peerAddress"
@@ -98,8 +131,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Address: --"
-                android:textSize="15sp"
-                android:textColor="#555555" />
+                android:textSize="13sp"
+                android:textColor="@color/neu_text_secondary" />
 
             <TextView
                 android:id="@+id/peerTransport"
@@ -107,8 +140,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Transport: --"
-                android:textSize="15sp"
-                android:textColor="#555555" />
+                android:textSize="13sp"
+                android:textColor="@color/neu_text_secondary" />
 
             <TextView
                 android:id="@+id/peerLastSeen"
@@ -116,18 +149,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Last Seen: --"
-                android:textSize="15sp"
-                android:textColor="#555555" />
+                android:textSize="13sp"
+                android:textColor="@color/neu_text_secondary" />
 
         </LinearLayout>
 
+        <!-- Action Button -->
         <Button
             android:id="@+id/messagePeerButton"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:text="Send Message" />
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_neu_button_primary"
+            android:text="Send Message"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

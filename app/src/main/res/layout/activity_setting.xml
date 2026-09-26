@@ -2,171 +2,235 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FA">
+    android:background="@color/neu_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="28dp">
 
-        <!-- Toolbar with Back Button -->
+        <!-- Neumorphic Header Card -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:background="#1976D2">
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="12dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/bg_neu_card">
 
             <ImageButton
                 android:id="@+id/backButton"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:background="@android:color/transparent"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_neu_circle_btn"
                 android:src="@android:drawable/ic_media_previous"
-                android:tint="#FFFFFF"
+                android:tint="@color/neu_text_primary"
                 android:contentDescription="Back" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:text="Settings"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-        <!-- Mesh Configuration Switches -->
-        <TextView
+        <!-- Mesh Operation Settings Card -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="8dp"
-            android:text="Mesh Operation"
-            android:textColor="#1976D2"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="10dp"
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_neu_card">
 
-        <Switch
-            android:id="@+id/autoDiscoverySwitch"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="Automatic Discovery"
-            android:textSize="15sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mesh Operation"
+                android:textColor="@color/neu_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-        <Switch
-            android:id="@+id/advertisingSwitch"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="Device Advertising"
-            android:textSize="15sp" />
+            <Switch
+                android:id="@+id/autoDiscoverySwitch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Automatic Discovery"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="14sp" />
 
-        <Switch
-            android:id="@+id/forwardingSwitch"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="Multi-Hop Packet Forwarding"
-            android:textSize="15sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/neu_border" />
 
-        <Switch
-            android:id="@+id/storeForwardSwitch"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="Store-and-Forward (DTN)"
-            android:textSize="15sp" />
+            <Switch
+                android:id="@+id/advertisingSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Device Advertising"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="14sp" />
 
-        <Switch
-            android:id="@+id/bootAutoStartSwitch"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="Auto-Start Mesh on Boot (FR-9.2)"
-            android:textSize="15sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/neu_border" />
 
-        <Switch
-            android:id="@+id/signMessagesSwitch"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="Sign Messages (Security FR-8.2)"
-            android:textSize="15sp" />
+            <Switch
+                android:id="@+id/forwardingSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Multi-Hop Packet Forwarding"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="14sp" />
 
-        <!-- Protocol & Timing Parameters -->
-        <TextView
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/neu_border" />
+
+            <Switch
+                android:id="@+id/storeForwardSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Store-and-Forward (DTN)"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/neu_border" />
+
+            <Switch
+                android:id="@+id/bootAutoStartSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Auto-Start Mesh on Boot (FR-9.2)"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/neu_border" />
+
+            <Switch
+                android:id="@+id/signMessagesSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Sign Messages (Security FR-8.2)"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <!-- Protocol & Timing Parameters Card -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="8dp"
-            android:text="Protocol &amp; Timing Parameters (FR-10.2)"
-            android:textColor="#1976D2"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="12dp"
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_neu_card">
 
-        <TextView
-            android:id="@+id/deviceNameText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:text="Device Name: -- (Tap to edit)"
-            android:textSize="15sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Protocol &amp; Timing Parameters (FR-10.2)"
+                android:textColor="@color/neu_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/ttlSettingText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:text="Max TTL (Hops): 8 (Tap to edit)"
-            android:textSize="15sp" />
+            <TextView
+                android:id="@+id/deviceNameText"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="Device Name: -- (Tap to edit)"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/heartbeatSettingText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:text="Heartbeat Interval: 4 s (Tap to edit)"
-            android:textSize="15sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/neu_border" />
 
-        <TextView
-            android:id="@+id/expirySettingText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:text="Message Expiry: 24 h (Tap to edit)"
-            android:textSize="15sp" />
+            <TextView
+                android:id="@+id/ttlSettingText"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="Max TTL (Hops): 8 (Tap to edit)"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="14sp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/neu_border" />
+
+            <TextView
+                android:id="@+id/heartbeatSettingText"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="Heartbeat Interval: 4 s (Tap to edit)"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/neu_border" />
+
+            <TextView
+                android:id="@+id/expirySettingText"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="Message Expiry: 24 h (Tap to edit)"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <!-- Reset Button -->
         <Button
             android:id="@+id/resetSettingsButton"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_margin="20dp"
-            android:text="Reset to Defaults" />
+            android:layout_height="50dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_neu_button_danger"
+            android:text="Reset to Defaults"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

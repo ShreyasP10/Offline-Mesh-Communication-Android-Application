@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@drawable/bg_neu_btn_primary_pressed" />
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp" />
+            <solid android:color="#CBD5E1" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/bg_neu_btn_primary_normal" />
+</selector>

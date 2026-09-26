@@ -75,11 +75,11 @@ public class PeerAdapter extends RecyclerView.Adapter<PeerAdapter.PeerViewHolder
 
             if (peer.isConnected()) {
                 peerStatus.setText("Connected");
-                peerStatus.setTextColor(0xFF388E3C); // green
+                peerStatus.setTextColor(0xFF10B981); // neu_accent_green
                 connectionIndicator.setImageResource(android.R.drawable.presence_online);
             } else {
                 peerStatus.setText("Discovered (Connecting...)");
-                peerStatus.setTextColor(0xFFF57C00); // orange
+                peerStatus.setTextColor(0xFFF59E0B); // neu_accent_orange
                 connectionIndicator.setImageResource(android.R.drawable.presence_away);
             }
 

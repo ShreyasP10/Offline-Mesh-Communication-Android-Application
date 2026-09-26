@@ -118,14 +118,21 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void loadMessages() {
-        List<ChatMessage> conversation = dbHelper.getMessagesForConversation(
-                peerId,
-                meshManager.getLocalNode().getNodeId()
-        );
-        messageAdapter.setMessages(conversation);
-        if (messageAdapter.getItemCount() > 0) {
-            messagesRecyclerView.scrollToPosition(messageAdapter.getItemCount() - 1);
-        }
+        final String localId = meshManager.getLocalNode().getNodeId();
+        dbHelper.executeAsync(() -> {
+            List<ChatMessage> conversation = dbHelper.getMessagesForConversation(
+                    peerId,
+                    localId
+            );
+            runOnUiThread(() -> {
+                if (!isFinishing() && !isDestroyed()) {
+                    messageAdapter.setMessages(conversation);
+                    if (messageAdapter.getItemCount() > 0) {
+                        messagesRecyclerView.scrollToPosition(messageAdapter.getItemCount() - 1);
+                    }
+                }
+            });
+        });
     }
 
     private void updatePeerStatus() {

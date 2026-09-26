@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.omc.R;
 import com.example.omc.mesh.MeshLogger;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
     @Override
     public LogViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(android.R.layout.simple_list_item_2, parent, false);
+                .inflate(R.layout.item_log, parent, false);
         return new LogViewHolder(view);
     }
 
@@ -58,27 +59,31 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.LogViewHolder> {
     }
 
     static class LogViewHolder extends RecyclerView.ViewHolder {
-        private final TextView text1;
-        private final TextView text2;
+        private final TextView logTag;
+        private final TextView logTimestamp;
+        private final TextView logMessage;
 
         LogViewHolder(@NonNull View itemView) {
             super(itemView);
-            text1 = itemView.findViewById(android.R.id.text1);
-            text2 = itemView.findViewById(android.R.id.text2);
-            text1.setTextSize(13);
-            text2.setTextSize(11);
+            logTag = itemView.findViewById(R.id.logTag);
+            logTimestamp = itemView.findViewById(R.id.logTimestamp);
+            logMessage = itemView.findViewById(R.id.logMessage);
         }
 
         void bind(MeshLogger.LogEntry entry) {
-            text1.setText("[" + entry.getTag() + "] " + entry.getMessage());
-            text2.setText(entry.getTimestamp());
+            logTag.setText(entry.getTag());
+            logTimestamp.setText(entry.getTimestamp());
+            logMessage.setText(entry.getMessage());
 
             if ("E".equals(entry.getLevel())) {
-                text1.setTextColor(Color.RED);
+                logTag.setTextColor(0xFFEF4444);
+                logMessage.setTextColor(0xFFDC2626);
             } else if ("I".equals(entry.getLevel())) {
-                text1.setTextColor(0xFF1976D2);
+                logTag.setTextColor(0xFF3B82F6);
+                logMessage.setTextColor(0xFF1E293B);
             } else {
-                text1.setTextColor(0xFF333333);
+                logTag.setTextColor(0xFF64748B);
+                logMessage.setTextColor(0xFF1E293B);
             }
         }
     }

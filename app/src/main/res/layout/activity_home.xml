@@ -3,42 +3,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F7FA">
+    android:background="@color/neu_background">
 
-    <!-- Toolbar -->
+    <!-- Neumorphic Header Card -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:background="#1976D2">
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:background="@drawable/bg_neu_card">
 
         <ImageView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:src="@drawable/ic_mesh"
             android:contentDescription="Mesh"
-            android:tint="#FFFFFF" />
+            android:tint="@color/neu_primary" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Offline Mesh"
-            android:textColor="#FFFFFF"
-            android:textSize="21sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Offline Mesh"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="P2P Decentralized Network"
+                android:textColor="@color/neu_text_secondary"
+                android:textSize="11sp" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/statusText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/bg_neu_pill_green"
             android:text="ONLINE"
             android:textColor="#FFFFFF"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -47,70 +72,89 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:padding="18dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="8dp"
+        android:padding="16dp"
         android:orientation="vertical"
-        android:background="@drawable/bg_message">
+        android:background="@drawable/bg_neu_card">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mesh Network"
-            android:textColor="#212121"
-            android:textSize="18sp"
+            android:text="Mesh Network Status"
+            android:textColor="@color/neu_text_primary"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/meshStatusText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:text="Ready to discover nearby devices"
-            android:textColor="#666666"
-            android:textSize="14sp" />
+            android:textColor="@color/neu_text_secondary"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/peerCountText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:text="0 nearby peers"
-            android:textColor="#1976D2"
-            android:textSize="15sp"
+            android:textColor="@color/neu_primary"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
     </LinearLayout>
 
-    <!-- Buttons -->
-    <Button
-        android:id="@+id/startMeshButton"
+    <!-- Mesh Action Buttons -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Start Mesh"
-        android:textSize="15sp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp">
 
-    <Button
-        android:id="@+id/stopMeshButton"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="Stop Mesh"
-        android:textSize="15sp" />
+        <Button
+            android:id="@+id/startMeshButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/bg_neu_button_primary"
+            android:text="Start Mesh"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
-    <!-- Nearby peers -->
+        <Button
+            android:id="@+id/stopMeshButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_neu_button_danger"
+            android:text="Stop Mesh"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- Nearby Devices Section Header -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="18dp"
         android:text="Nearby Devices"
-        android:textColor="#212121"
-        android:textSize="18sp"
+        android:textColor="@color/neu_text_primary"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -118,44 +162,68 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="8dp"
-        android:padding="8dp" />
+        android:layout_marginTop="4dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:clipToPadding="false" />
 
-    <!-- Bottom navigation -->
+    <!-- Neumorphic Bottom Navigation Dock -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="62dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="#FFFFFF">
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:background="@drawable/bg_neu_nav_dock">
 
         <Button
             android:id="@+id/homeButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="46dp"
             android:layout_weight="1"
-            android:text="Home" />
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_neu_nav_item"
+            android:text="Home"
+            android:textColor="@color/neu_primary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/chatsButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="46dp"
             android:layout_weight="1"
-            android:text="Chats" />
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_neu_nav_item"
+            android:text="Chats"
+            android:textColor="@color/neu_text_primary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/logsButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="46dp"
             android:layout_weight="1"
-            android:text="Logs" />
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_neu_nav_item"
+            android:text="Logs"
+            android:textColor="@color/neu_text_primary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/settingsButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="46dp"
             android:layout_weight="1"
-            android:text="Settings" />
+            android:layout_margin="2dp"
+            android:background="@drawable/bg_neu_nav_item"
+            android:text="Settings"
+            android:textColor="@color/neu_text_primary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

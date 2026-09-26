@@ -213,12 +213,14 @@ public class MainActivity extends AppCompatActivity {
     private void updateMeshUI(boolean running) {
         if (running) {
             statusText.setText("ONLINE");
-            statusText.setTextColor(0xFF4CAF50);
+            statusText.setBackgroundResource(R.drawable.bg_neu_pill_green);
+            statusText.setTextColor(0xFFFFFFFF);
             meshStatusText.setText("Active: " + meshManager.getLocalNode().getNodeName());
             startMeshButton.setEnabled(false);
             stopMeshButton.setEnabled(true);
         } else {
             statusText.setText("OFFLINE");
+            statusText.setBackgroundResource(R.drawable.bg_neu_pill_red);
             statusText.setTextColor(0xFFFFFFFF);
             meshStatusText.setText("Ready to discover nearby devices");
             startMeshButton.setEnabled(true);

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Outer Inset Border -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp" />
+            <solid android:color="@color/neu_inset_shadow" />
+        </shape>
+    </item>
+
+    <!-- Sunken Bed with Inset Offset -->
+    <item
+        android:left="2dp"
+        android:top="2dp"
+        android:right="1dp"
+        android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="19dp" />
+            <solid android:color="@color/neu_inset_bg" />
+        </shape>
+    </item>
+</layer-list>

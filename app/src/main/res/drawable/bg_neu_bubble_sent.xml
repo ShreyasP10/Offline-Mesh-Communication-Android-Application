@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Blue Shadow -->
+    <item
+        android:left="2dp"
+        android:top="2dp"
+        android:right="0dp"
+        android:bottom="0dp">
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="18dp"
+                android:topRightRadius="18dp"
+                android:bottomLeftRadius="18dp"
+                android:bottomRightRadius="4dp" />
+            <solid android:color="@color/neu_primary_shadow" />
+        </shape>
+    </item>
+
+    <!-- Highlight -->
+    <item
+        android:left="0dp"
+        android:top="0dp"
+        android:right="2dp"
+        android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="18dp"
+                android:topRightRadius="18dp"
+                android:bottomLeftRadius="18dp"
+                android:bottomRightRadius="4dp" />
+            <solid android:color="@color/neu_light_shadow" />
+        </shape>
+    </item>
+
+    <!-- Sent Message Surface -->
+    <item
+        android:left="1dp"
+        android:top="1dp"
+        android:right="1dp"
+        android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="18dp"
+                android:topRightRadius="18dp"
+                android:bottomLeftRadius="18dp"
+                android:bottomRightRadius="4dp" />
+            <gradient
+                android:angle="135"
+                android:startColor="@color/neu_primary"
+                android:endColor="@color/neu_primary_dark"
+                android:type="linear" />
+        </shape>
+    </item>
+</layer-list>

@@ -128,6 +128,16 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
                 return false;
             });
+
+            if (ChatMessage.STATUS_FAILED.equals(message.getStatus())) {
+                itemView.setOnClickListener(v -> {
+                    if (listener != null) {
+                        listener.onMessageLongClick(message);
+                    }
+                });
+            } else {
+                itemView.setOnClickListener(null);
+            }
         }
     }
 

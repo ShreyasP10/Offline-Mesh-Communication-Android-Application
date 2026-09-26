@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.OMC" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorPrimary">@color/neu_primary</item>
+        <item name="colorPrimaryVariant">@color/neu_primary_dark</item>
+        <item name="colorOnPrimary">@color/neu_text_on_primary</item>
+        <item name="colorSecondary">@color/neu_primary_light</item>
+        <item name="colorSecondaryVariant">@color/neu_primary_dark</item>
+        <item name="colorOnSecondary">@color/neu_text_primary</item>
+        <item name="android:windowBackground">@color/neu_background</item>
+        <item name="android:colorBackground">@color/neu_background</item>
+        <item name="android:statusBarColor">@color/neu_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@color/neu_background</item>
     </style>
 </resources>

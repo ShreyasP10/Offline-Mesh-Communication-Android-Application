@@ -12,7 +12,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "omc_mesh.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public static final String TABLE_MESSAGES = "messages";
     public static final String COL_MSG_ID = "message_id";
@@ -30,6 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_SETTING_VAL = "val";
 
     private static DatabaseHelper instance;
+    private final java.util.concurrent.ExecutorService asyncExecutor = java.util.concurrent.Executors.newSingleThreadExecutor();
 
     public static synchronized DatabaseHelper getInstance(Context context) {
         if (instance == null) {
@@ -63,13 +64,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(createMessagesTable);
         db.execSQL(createSettingsTable);
+        createIndexes(db);
+    }
+
+    private void createIndexes(SQLiteDatabase db) {
+        // High-performance composite indexes for instant conversation loading & status queries
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_messages_conv ON " + TABLE_MESSAGES
+                + " (" + COL_SOURCE_ID + ", " + COL_DEST_ID + ", " + COL_TIMESTAMP + ")");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_messages_dest ON " + TABLE_MESSAGES
+                + " (" + COL_DEST_ID + ", " + COL_TIMESTAMP + ")");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_messages_status ON " + TABLE_MESSAGES
+                + " (" + COL_STATUS + ", " + COL_TIMESTAMP + ")");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_messages_time ON " + TABLE_MESSAGES
+                + " (" + COL_TIMESTAMP + ")");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MESSAGES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SETTINGS);
-        onCreate(db);
+        if (oldVersion < 2) {
+            createIndexes(db);
+        } else {
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_MESSAGES);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_SETTINGS);
+            onCreate(db);
+        }
+    }
+
+    public void executeAsync(Runnable task) {
+        if (task != null) {
+            asyncExecutor.execute(task);
+        }
     }
 
     public synchronized void saveMessage(ChatMessage message) {
@@ -89,6 +113,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insertWithOnConflict(TABLE_MESSAGES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
+    /**
+     * Batch save messages inside a single SQLite transaction for scalable burst throughput.
+     */
+    public synchronized void saveMessagesBatch(List<ChatMessage> messages) {
+        if (messages == null || messages.isEmpty()) return;
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            for (ChatMessage message : messages) {
+                if (message == null) continue;
+                ContentValues values = new ContentValues();
+                values.put(COL_MSG_ID, message.getMessageId());
+                values.put(COL_SOURCE_ID, message.getSourceId());
+                values.put(COL_SENDER_NAME, message.getSenderName());
+                values.put(COL_DEST_ID, message.getDestinationId());
+                values.put(COL_TEXT, message.getText());
+                values.put(COL_STATUS, message.getStatus());
+                values.put(COL_TIMESTAMP, message.getTimestamp());
+                values.put(COL_IS_OUTGOING, message.isOutgoing() ? 1 : 0);
+                values.put(COL_HOP_COUNT, message.getHopCount());
+                db.insertWithOnConflict(TABLE_MESSAGES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
     public synchronized void updateMessageStatus(String messageId, String status) {
         if (messageId == null) return;
         SQLiteDatabase db = getWritableDatabase();
@@ -98,6 +150,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public synchronized List<ChatMessage> getMessagesForConversation(String peerNodeId, String localNodeId) {
+        return getMessagesForConversation(peerNodeId, localNodeId, 0, 0);
+    }
+
+    /**
+     * Scalable conversation query supporting pagination (limit/offset).
+     * If limit <= 0, returns all matching messages.
+     */
+    public synchronized List<ChatMessage> getMessagesForConversation(String peerNodeId, String localNodeId, int limit, int offset) {
         List<ChatMessage> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
 
@@ -114,7 +174,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             selectionArgs = new String[]{localNodeId, peerNodeId, peerNodeId, localNodeId};
         }
 
-        Cursor cursor = db.query(TABLE_MESSAGES, null, selection, selectionArgs, null, null, COL_TIMESTAMP + " ASC");
+        String limitClause = limit > 0 ? (offset > 0 ? offset + "," + limit : String.valueOf(limit)) : null;
+        Cursor cursor = db.query(TABLE_MESSAGES, null, selection, selectionArgs, null, null, COL_TIMESTAMP + " ASC", limitClause);
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 list.add(cursorToMessage(cursor));

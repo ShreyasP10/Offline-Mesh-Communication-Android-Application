@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <!-- Neumorphic Base Canvas & Shadows -->
+    <color name="neu_background">#E6ECF5</color>
+    <color name="neu_surface">#E6ECF5</color>
+    <color name="neu_light_shadow">#FFFFFF</color>
+    <color name="neu_dark_shadow">#B4C1D4</color>
+    <color name="neu_dark_shadow_subtle">#CAD5E2</color>
+    <color name="neu_border">#D6DFEB</color>
+    <color name="neu_inset_bg">#DFE5EE</color>
+    <color name="neu_inset_shadow">#C3CFDF</color>
+
+    <!-- Neumorphic Accents -->
+    <color name="neu_primary">#3B82F6</color>
+    <color name="neu_primary_dark">#1D4ED8</color>
+    <color name="neu_primary_light">#60A5FA</color>
+    <color name="neu_primary_shadow">#93C5FD</color>
+    <color name="neu_accent_green">#10B981</color>
+    <color name="neu_accent_red">#EF4444</color>
+    <color name="neu_accent_orange">#F59E0B</color>
+
+    <!-- Typography -->
+    <color name="neu_text_primary">#1E293B</color>
+    <color name="neu_text_secondary">#64748B</color>
+    <color name="neu_text_tertiary">#94A3B8</color>
+    <color name="neu_text_on_primary">#FFFFFF</color>
+
+    <!-- Legacy / Compatibility Colors -->
+    <color name="purple_500">#3B82F6</color>
+    <color name="purple_700">#1D4ED8</color>
+    <color name="teal_200">#10B981</color>
+    <color name="teal_700">#047857</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

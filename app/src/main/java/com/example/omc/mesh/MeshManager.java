@@ -70,6 +70,7 @@ public class MeshManager {
 
     private final List<MeshListener> listeners = new CopyOnWriteArrayList<>();
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
+    private final java.util.concurrent.ExecutorService messageExecutor = java.util.concurrent.Executors.newFixedThreadPool(4);
 
     private boolean meshRunning = false;
 
@@ -102,7 +103,7 @@ public class MeshManager {
 
         this.protocolManager = new ProtocolManager();
         this.routingManager = new RoutingManager(localNode);
-        this.seenPacketCache = new SeenPacketCache(1000);
+        this.seenPacketCache = new SeenPacketCache(10000);
         this.dtnStore = new DtnStore(this.context);
         this.ackManager = new AckManager();
         this.messageSigner = new com.example.omc.security.MessageSigner();
@@ -135,7 +136,8 @@ public class MeshManager {
 
             @Override
             public void onPayloadReceived(String endpointId, byte[] payload) {
-                handleInboundPayload(endpointId, payload);
+                // Scalable async packet dispatch - never blocks the radio connection thread
+                messageExecutor.execute(() -> handleInboundPayload(endpointId, payload));
             }
         });
 

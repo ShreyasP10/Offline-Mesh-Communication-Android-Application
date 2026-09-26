@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class SeenPacketCache {
 
-    private static final int DEFAULT_MAX_SIZE = 1000;
+    private static final int DEFAULT_MAX_SIZE = 10000;
 
     private final Set<String> cache;
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Danger Drop Shadow -->
+    <item
+        android:left="3dp"
+        android:top="3dp"
+        android:right="0dp"
+        android:bottom="0dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp" />
+            <solid android:color="#FECACA" />
+        </shape>
+    </item>
+
+    <!-- Highlight -->
+    <item
+        android:left="0dp"
+        android:top="0dp"
+        android:right="3dp"
+        android:bottom="3dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp" />
+            <solid android:color="@color/neu_light_shadow" />
+        </shape>
+    </item>
+
+    <!-- Danger Gradient Surface -->
+    <item
+        android:left="2dp"
+        android:top="2dp"
+        android:right="2dp"
+        android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="15dp" />
+            <gradient
+                android:angle="135"
+                android:startColor="#F87171"
+                android:centerColor="@color/neu_accent_red"
+                android:endColor="#DC2626"
+                android:type="linear" />
+        </shape>
+    </item>
+</layer-list>

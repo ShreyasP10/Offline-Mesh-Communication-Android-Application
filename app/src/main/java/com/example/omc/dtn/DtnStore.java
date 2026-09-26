@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.omc.mesh.MeshConfig;
 import com.example.omc.mesh.MeshLogger;
+import com.example.omc.protocol.MessageType;
+import com.example.omc.protocol.OMCHeader;
 import com.example.omc.protocol.OMCMessage;
 import com.example.omc.storage.ChatMessage;
 import com.example.omc.storage.DatabaseHelper;
@@ -22,12 +24,45 @@ public class DtnStore {
 
     private static final String TAG = MeshConfig.LOG_DTN;
     private static final long DEFAULT_EXPIRY_MS = 24 * 60 * 60 * 1000L; // 24 hours
+    private static final int MAX_IN_MEMORY_PENDING = 500;
 
     private final DatabaseHelper dbHelper;
     private final ConcurrentHashMap<String, OMCMessage> inMemoryPending = new ConcurrentHashMap<>();
 
     public DtnStore(Context context) {
         this.dbHelper = DatabaseHelper.getInstance(context);
+        restorePendingFromDatabase();
+    }
+
+    private void restorePendingFromDatabase() {
+        try {
+            List<ChatMessage> pending = dbHelper.getPendingMessages();
+            if (pending != null) {
+                int count = 0;
+                for (ChatMessage cm : pending) {
+                    if (count >= MAX_IN_MEMORY_PENDING) break;
+                    OMCHeader header = new OMCHeader(
+                            MeshConfig.PROTOCOL_VERSION,
+                            cm.getMessageId(),
+                            cm.getSourceId(),
+                            cm.getDestinationId(),
+                            MessageType.CHAT,
+                            MeshConfig.DEFAULT_TTL,
+                            cm.getHopCount(),
+                            cm.getTimestamp(),
+                            null
+                    );
+                    OMCMessage msg = new OMCMessage(header, cm.getText());
+                    inMemoryPending.put(cm.getMessageId(), msg);
+                    count++;
+                }
+                if (count > 0) {
+                    MeshLogger.log(TAG, "Restored " + count + " pending DTN messages from persistent storage");
+                }
+            }
+        } catch (Exception e) {
+            MeshLogger.log(TAG, "Failed to restore pending messages: " + e.getMessage(), "E");
+        }
     }
 
     public void save(OMCMessage message) {
