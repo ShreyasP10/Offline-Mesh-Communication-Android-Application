@@ -124,10 +124,8 @@ public class MainActivity extends AppCompatActivity {
         peersRecyclerView.setAdapter(peerAdapter);
 
         startMeshButton.setOnClickListener(v -> {
-            if (hasAllRequiredPermissions()) {
-                if (isRadioReady()) {
-                    startMeshService();
-                }
+            if (hasRequiredPermissions()) {
+                startMeshService();
             } else {
                 checkAndRequestPermissions(true);
             }
@@ -156,46 +154,36 @@ public class MainActivity extends AppCompatActivity {
         permissionLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestMultiplePermissions(),
                 result -> {
-                    boolean allGranted = true;
-                    for (Boolean granted : result.values()) {
-                        if (!Boolean.TRUE.equals(granted)) {
-                            allGranted = false;
-                            break;
-                        }
-                    }
-
-                    if (allGranted) {
+                    if (hasRequiredPermissions()) {
                         Toast.makeText(this, "Permissions granted. Starting mesh...", Toast.LENGTH_SHORT).show();
-                        if (isRadioReady()) {
-                            startMeshService();
-                        }
+                        startMeshService();
                     } else {
-                        Toast.makeText(this, "Bluetooth, Wi-Fi & Location permissions are required for mesh discovery.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Bluetooth & Location permissions are required for mesh discovery.", Toast.LENGTH_LONG).show();
                     }
                 }
         );
     }
 
-    private boolean isRadioReady() {
-        android.bluetooth.BluetoothAdapter btAdapter = android.bluetooth.BluetoothAdapter.getDefaultAdapter();
-        if (btAdapter != null && !btAdapter.isEnabled()) {
-            Toast.makeText(this, "Please turn ON Bluetooth to discover nearby devices", Toast.LENGTH_LONG).show();
-            return false;
-        }
-
-        android.location.LocationManager locManager = (android.location.LocationManager) getSystemService(LOCATION_SERVICE);
-        if (locManager != null) {
-            boolean gps = locManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
-            boolean net = locManager.isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER);
-            if (!gps && !net) {
-                Toast.makeText(this, "Please turn ON Location to discover nearby devices", Toast.LENGTH_LONG).show();
-                return false;
+    private void promptRadioHintsIfNeeded() {
+        try {
+            android.bluetooth.BluetoothAdapter btAdapter = android.bluetooth.BluetoothAdapter.getDefaultAdapter();
+            if (btAdapter != null && !btAdapter.isEnabled()) {
+                Toast.makeText(this, "Tip: Turn ON Bluetooth so nearby phones can detect you.", Toast.LENGTH_SHORT).show();
             }
-        }
-        return true;
+            android.location.LocationManager locManager = (android.location.LocationManager) getSystemService(LOCATION_SERVICE);
+            if (locManager != null) {
+                boolean locEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
+                        ? locManager.isLocationEnabled()
+                        : (locManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)
+                        || locManager.isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER));
+                if (!locEnabled) {
+                    Toast.makeText(this, "Tip: Turn ON Location in device Settings for nearby discovery.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (Exception ignored) {}
     }
 
-    private boolean hasAllRequiredPermissions() {
+    private boolean hasRequiredPermissions() {
         for (String perm : getRequiredPermissions()) {
             if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
                 return false;
@@ -217,14 +205,21 @@ public class MainActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             list.add(Manifest.permission.NEARBY_WIFI_DEVICES);
-            list.add(Manifest.permission.POST_NOTIFICATIONS);
         }
 
         return list.toArray(new String[0]);
     }
 
+    private String[] getAllPermissionsToRequest() {
+        List<String> list = new ArrayList<>(java.util.Arrays.asList(getRequiredPermissions()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            list.add(Manifest.permission.POST_NOTIFICATIONS);
+        }
+        return list.toArray(new String[0]);
+    }
+
     private void checkAndRequestPermissions(boolean startAfterGrant) {
-        String[] permissions = getRequiredPermissions();
+        String[] permissions = getAllPermissionsToRequest();
         List<String> missing = new ArrayList<>();
         for (String p : permissions) {
             if (ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED) {
@@ -240,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startMeshService() {
+        promptRadioHintsIfNeeded();
         MeshForegroundService.start(this);
         updateMeshUI(true);
         Toast.makeText(this, "Mesh Network Started", Toast.LENGTH_SHORT).show();
@@ -278,7 +274,15 @@ public class MainActivity extends AppCompatActivity {
                 if (p.isConnected()) connected++;
             }
         }
-        peerCountText.setText(total + " discovered (" + connected + " connected)");
+        if (meshManager != null && meshManager.isMeshRunning()) {
+            if (total == 0) {
+                peerCountText.setText("🔍 Scanning for nearby phones...");
+            } else {
+                peerCountText.setText(total + " discovered (" + connected + " connected)");
+            }
+        } else {
+            peerCountText.setText(total + " nearby peers");
+        }
     }
 
     private void onPeerClicked(Peer peer) {

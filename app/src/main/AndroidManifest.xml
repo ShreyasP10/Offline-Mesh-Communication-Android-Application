@@ -18,7 +18,6 @@
 
     <!-- Android 13+ (API 33+) Nearby Wi-Fi Devices -->
     <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES"
-        android:usesPermissionFlags="neverForLocation"
         tools:targetApi="33" />
 
     <!-- Network & Internet permissions for Wi-Fi LAN / IP mesh discovery and communication -->
