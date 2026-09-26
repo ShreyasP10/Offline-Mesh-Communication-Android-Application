@@ -41,21 +41,20 @@ public class ScalableMessagingTest {
     }
 
     @Test
-    public void testNonDisruptiveNearbyOptionsConfiguration() {
+    public void testNearbyOptionsConfiguration() {
         com.google.android.gms.nearby.connection.AdvertisingOptions advOptions =
                 new com.google.android.gms.nearby.connection.AdvertisingOptions.Builder()
                         .setStrategy(com.google.android.gms.nearby.connection.Strategy.P2P_CLUSTER)
-                        .setDisruptiveUpgrade(false)
                         .setLowPower(false)
                         .build();
         assertNotNull(advOptions);
 
-        com.google.android.gms.nearby.connection.ConnectionOptions connOptions =
-                new com.google.android.gms.nearby.connection.ConnectionOptions.Builder()
-                        .setDisruptiveUpgrade(false)
+        com.google.android.gms.nearby.connection.DiscoveryOptions discOptions =
+                new com.google.android.gms.nearby.connection.DiscoveryOptions.Builder()
+                        .setStrategy(com.google.android.gms.nearby.connection.Strategy.P2P_CLUSTER)
                         .setLowPower(false)
                         .build();
-        assertNotNull(connOptions);
+        assertNotNull(discOptions);
     }
 
     @Test

@@ -125,7 +125,9 @@ public class MainActivity extends AppCompatActivity {
 
         startMeshButton.setOnClickListener(v -> {
             if (hasAllRequiredPermissions()) {
-                startMeshService();
+                if (isRadioReady()) {
+                    startMeshService();
+                }
             } else {
                 checkAndRequestPermissions(true);
             }
@@ -163,12 +165,34 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (allGranted) {
-                        Toast.makeText(this, "Permissions granted. Ready to start mesh!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Permissions granted. Starting mesh...", Toast.LENGTH_SHORT).show();
+                        if (isRadioReady()) {
+                            startMeshService();
+                        }
                     } else {
-                        Toast.makeText(this, "Bluetooth & Location permissions are required for offline mesh.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Bluetooth, Wi-Fi & Location permissions are required for mesh discovery.", Toast.LENGTH_LONG).show();
                     }
                 }
         );
+    }
+
+    private boolean isRadioReady() {
+        android.bluetooth.BluetoothAdapter btAdapter = android.bluetooth.BluetoothAdapter.getDefaultAdapter();
+        if (btAdapter != null && !btAdapter.isEnabled()) {
+            Toast.makeText(this, "Please turn ON Bluetooth to discover nearby devices", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        android.location.LocationManager locManager = (android.location.LocationManager) getSystemService(LOCATION_SERVICE);
+        if (locManager != null) {
+            boolean gps = locManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
+            boolean net = locManager.isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER);
+            if (!gps && !net) {
+                Toast.makeText(this, "Please turn ON Location to discover nearby devices", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean hasAllRequiredPermissions() {
@@ -192,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            list.add(Manifest.permission.NEARBY_WIFI_DEVICES);
             list.add(Manifest.permission.POST_NOTIFICATIONS);
         }
 

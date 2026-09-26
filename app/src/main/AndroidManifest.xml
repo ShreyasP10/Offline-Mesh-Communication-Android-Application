@@ -21,8 +21,11 @@
         android:usesPermissionFlags="neverForLocation"
         tools:targetApi="33" />
 
-    <!-- Wi-Fi state read permission (optional) -->
+    <!-- Network & Internet permissions for Wi-Fi LAN / IP mesh discovery and communication -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <!-- Foreground Service & Notifications -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />

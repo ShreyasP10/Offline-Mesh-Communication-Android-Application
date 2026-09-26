@@ -86,41 +86,25 @@ public class ConnectionManager {
                         + peer.getName()
         );
 
-        ConnectionOptions connectionOptions =
-                new ConnectionOptions.Builder()
-                        .setDisruptiveUpgrade(false)
-                        .build();
-
         connectionsClient.requestConnection(
                         localNode.getNodeName(),
                         endpointId,
-                        connectionLifecycleCallback,
-                        connectionOptions
+                        connectionLifecycleCallback
                 )
                 .addOnSuccessListener(unused -> {
-
-                    Log.d(
-                            TAG,
-                            "Connection request sent: "
-                                    + endpointId
-                    );
+                    Log.d(TAG, "Connection request sent: " + endpointId);
+                    com.example.omc.mesh.MeshLogger.log(TAG, "Connection request sent to: " + peer.getName() + " (" + endpointId + ")");
                 })
                 .addOnFailureListener(e -> {
-
                     connectionStates.put(
                             endpointId,
                             ConnectionState.FAILED
                     );
 
-                    Log.e(
-                            TAG,
-                            "Connection request failed: "
-                                    + endpointId,
-                            e
-                    );
+                    Log.e(TAG, "Connection request failed: " + endpointId, e);
+                    com.example.omc.mesh.MeshLogger.log(TAG, "Connection request to " + peer.getName() + " failed: " + e.getMessage(), "E");
 
                     if (callback != null) {
-
                         callback.onConnectionFailed(
                                 endpointId
                         );

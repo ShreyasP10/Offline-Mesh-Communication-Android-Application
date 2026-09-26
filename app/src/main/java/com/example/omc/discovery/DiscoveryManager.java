@@ -64,7 +64,6 @@ public class DiscoveryManager {
                 new AdvertisingOptions.Builder()
                         .setStrategy(Strategy.P2P_CLUSTER)
                         .setLowPower(lowPowerMode)
-                        .setDisruptiveUpgrade(false)
                         .build();
 
         connectionsClient
@@ -75,23 +74,14 @@ public class DiscoveryManager {
                         options
                 )
                 .addOnSuccessListener(unused -> {
-
                     advertising = true;
-
-                    Log.d(
-                            TAG,
-                            "Advertising started"
-                    );
+                    Log.d(TAG, "Advertising started as: " + localNode.getNodeName());
+                    com.example.omc.mesh.MeshLogger.log(TAG, "Advertising active as: " + localNode.getNodeName());
                 })
                 .addOnFailureListener(e -> {
-
                     advertising = false;
-
-                    Log.e(
-                            TAG,
-                            "Advertising failed",
-                            e
-                    );
+                    Log.e(TAG, "Advertising failed", e);
+                    com.example.omc.mesh.MeshLogger.log(TAG, "Advertising failed: " + e.getMessage(), "E");
                 });
     }
 
@@ -161,23 +151,14 @@ public class DiscoveryManager {
                         options
                 )
                 .addOnSuccessListener(unused -> {
-
                     discovering = true;
-
-                    Log.d(
-                            TAG,
-                            "Discovery started"
-                    );
+                    Log.d(TAG, "Discovery started");
+                    com.example.omc.mesh.MeshLogger.log(TAG, "Discovery active (scanning nearby devices)...");
                 })
                 .addOnFailureListener(e -> {
-
                     discovering = false;
-
-                    Log.e(
-                            TAG,
-                            "Discovery failed",
-                            e
-                    );
+                    Log.e(TAG, "Discovery failed", e);
+                    com.example.omc.mesh.MeshLogger.log(TAG, "Discovery failed: " + e.getMessage(), "E");
                 });
     }
 
