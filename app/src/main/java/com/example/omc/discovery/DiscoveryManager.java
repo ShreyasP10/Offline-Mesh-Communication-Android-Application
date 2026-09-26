@@ -64,6 +64,7 @@ public class DiscoveryManager {
                 new AdvertisingOptions.Builder()
                         .setStrategy(Strategy.P2P_CLUSTER)
                         .setLowPower(lowPowerMode)
+                        .setDisruptiveUpgrade(false)
                         .build();
 
         connectionsClient
@@ -181,31 +182,25 @@ public class DiscoveryManager {
     }
 
 
-    public void stop() {
-
+    public void stopAdvertising() {
         if (advertising) {
-
             connectionsClient.stopAdvertising();
-
             advertising = false;
-
-            Log.d(
-                    TAG,
-                    "Advertising stopped"
-            );
+            Log.d(TAG, "Advertising stopped");
         }
+    }
 
+    public void stopDiscovery() {
         if (discovering) {
-
             connectionsClient.stopDiscovery();
-
             discovering = false;
-
-            Log.d(
-                    TAG,
-                    "Discovery stopped"
-            );
+            Log.d(TAG, "Discovery stopped");
         }
+    }
+
+    public void stop() {
+        stopAdvertising();
+        stopDiscovery();
     }
 
     public void setLowPowerMode(boolean lowPower, ConnectionLifecycleCallback cb) {

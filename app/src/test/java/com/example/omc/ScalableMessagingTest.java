@@ -31,6 +31,34 @@ import static org.junit.Assert.assertTrue;
 public class ScalableMessagingTest {
 
     @Test
+    public void testNodeDisplayNameUpdate() {
+        com.example.omc.mesh.MeshNode node = new com.example.omc.mesh.MeshNode("node-id-123", "OldName", true);
+        assertEquals("OldName", node.getNodeName());
+        assertEquals("node-id-123", node.getNodeId());
+
+        node.setNodeName("NewOfflinePhone");
+        assertEquals("NewOfflinePhone", node.getNodeName());
+    }
+
+    @Test
+    public void testNonDisruptiveNearbyOptionsConfiguration() {
+        com.google.android.gms.nearby.connection.AdvertisingOptions advOptions =
+                new com.google.android.gms.nearby.connection.AdvertisingOptions.Builder()
+                        .setStrategy(com.google.android.gms.nearby.connection.Strategy.P2P_CLUSTER)
+                        .setDisruptiveUpgrade(false)
+                        .setLowPower(false)
+                        .build();
+        assertNotNull(advOptions);
+
+        com.google.android.gms.nearby.connection.ConnectionOptions connOptions =
+                new com.google.android.gms.nearby.connection.ConnectionOptions.Builder()
+                        .setDisruptiveUpgrade(false)
+                        .setLowPower(false)
+                        .build();
+        assertNotNull(connOptions);
+    }
+
+    @Test
     public void testHighVolumeSeenPacketCacheScalability() {
         SeenPacketCache cache = new SeenPacketCache(10000);
         int totalPackets = 10000;

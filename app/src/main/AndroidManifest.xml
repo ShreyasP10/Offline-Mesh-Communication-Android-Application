@@ -21,9 +21,8 @@
         android:usesPermissionFlags="neverForLocation"
         tools:targetApi="33" />
 
-    <!-- Wi-Fi Direct permissions -->
+    <!-- Wi-Fi state read permission (optional) -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <!-- Foreground Service & Notifications -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />

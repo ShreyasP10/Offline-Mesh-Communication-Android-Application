@@ -691,9 +691,23 @@ public class MeshManager {
 
     public void updateDisplayName(String newName) {
         if (newName != null && !newName.trim().isEmpty()) {
-            localNode.setNodeName(newName.trim());
-            dbHelper.saveSetting("display_name", newName.trim());
-            MeshLogger.log(TAG, "Display name updated to: " + newName.trim());
+            String trimmed = newName.trim();
+            localNode.setNodeName(trimmed);
+            dbHelper.saveSetting("display_name", trimmed);
+            MeshLogger.log(TAG, "Display name updated to: " + trimmed);
+
+            if (meshRunning && discoveryManager != null && connectionManager != null) {
+                // Restart advertising with the new node name so nearby peers discover it immediately
+                discoveryManager.stopAdvertising();
+                discoveryManager.startAdvertising(connectionManager.getConnectionLifecycleCallback());
+
+                // Broadcast updated HELLO handshake to all currently connected peers
+                for (Peer p : discoveredPeers) {
+                    if (p.isConnected()) {
+                        sendHello(p.getEndpointId());
+                    }
+                }
+            }
         }
     }
 

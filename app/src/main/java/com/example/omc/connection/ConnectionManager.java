@@ -9,6 +9,7 @@ import com.example.omc.mesh.MeshNode;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
 import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
+import com.google.android.gms.nearby.connection.ConnectionOptions;
 import com.google.android.gms.nearby.connection.ConnectionResolution;
 import com.google.android.gms.nearby.connection.ConnectionsClient;
 import com.google.android.gms.nearby.connection.Payload;
@@ -85,10 +86,16 @@ public class ConnectionManager {
                         + peer.getName()
         );
 
+        ConnectionOptions connectionOptions =
+                new ConnectionOptions.Builder()
+                        .setDisruptiveUpgrade(false)
+                        .build();
+
         connectionsClient.requestConnection(
                         localNode.getNodeName(),
                         endpointId,
-                        connectionLifecycleCallback
+                        connectionLifecycleCallback,
+                        connectionOptions
                 )
                 .addOnSuccessListener(unused -> {
 

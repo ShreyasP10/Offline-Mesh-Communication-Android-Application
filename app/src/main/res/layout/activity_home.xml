@@ -68,6 +68,74 @@
 
     </LinearLayout>
 
+    <!-- Phone / Node Display Name Card (Quick Tap to Edit) -->
+    <LinearLayout
+        android:id="@+id/deviceNameContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="6dp"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:background="@drawable/bg_neu_card"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_peer"
+            android:contentDescription="Device Name"
+            android:tint="@color/neu_primary" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Phone Name (Offline Node)"
+                android:textColor="@color/neu_text_secondary"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/homeDeviceNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="My Phone"
+                android:textColor="@color/neu_text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/editDeviceNameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change ✏️"
+            android:textColor="@color/neu_primary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:background="@drawable/bg_neu_input" />
+
+    </LinearLayout>
+
     <!-- Mesh Status Card -->
     <LinearLayout
         android:layout_width="match_parent"

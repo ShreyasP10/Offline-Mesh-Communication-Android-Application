@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView statusText;
     private TextView meshStatusText;
     private TextView peerCountText;
+    private View deviceNameContainer;
+    private TextView homeDeviceNameText;
+    private View editDeviceNameButton;
     private Button startMeshButton;
     private Button stopMeshButton;
     private RecyclerView peersRecyclerView;
@@ -93,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
         statusText = findViewById(R.id.statusText);
         meshStatusText = findViewById(R.id.meshStatusText);
         peerCountText = findViewById(R.id.peerCountText);
+        deviceNameContainer = findViewById(R.id.deviceNameContainer);
+        homeDeviceNameText = findViewById(R.id.homeDeviceNameText);
+        editDeviceNameButton = findViewById(R.id.editDeviceNameButton);
         startMeshButton = findViewById(R.id.startMeshButton);
         stopMeshButton = findViewById(R.id.stopMeshButton);
         peersRecyclerView = findViewById(R.id.peersRecyclerView);
@@ -101,6 +109,15 @@ public class MainActivity extends AppCompatActivity {
         chatsButton = findViewById(R.id.chatsButton);
         logsButton = findViewById(R.id.logsButton);
         settingsButton = findViewById(R.id.settingsButton);
+
+        refreshDeviceNameDisplay();
+
+        if (deviceNameContainer != null) {
+            deviceNameContainer.setOnClickListener(v -> showChangeDeviceNameDialog());
+        }
+        if (editDeviceNameButton != null) {
+            editDeviceNameButton.setOnClickListener(v -> showChangeDeviceNameDialog());
+        }
 
         peersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         peerAdapter = new PeerAdapter(this::onPeerClicked);
@@ -175,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            list.add(Manifest.permission.NEARBY_WIFI_DEVICES);
             list.add(Manifest.permission.POST_NOTIFICATIONS);
         }
 
@@ -285,9 +301,43 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
+    private void refreshDeviceNameDisplay() {
+        if (homeDeviceNameText != null && meshManager != null && meshManager.getLocalNode() != null) {
+            homeDeviceNameText.setText(meshManager.getLocalNode().getNodeName());
+        }
+    }
+
+    private void showChangeDeviceNameDialog() {
+        final EditText input = new EditText(this);
+        String currentName = meshManager.getLocalNode().getNodeName();
+        input.setText(currentName);
+        input.setSelection(input.getText().length());
+        input.setSingleLine(true);
+        input.setPadding(40, 30, 40, 30);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Change Phone Name")
+                .setMessage("Enter the display name for your offline mesh node. Other nearby phones will detect and chat with you using this name:")
+                .setView(input)
+                .setPositiveButton("Save", (dialog, which) -> {
+                    String newName = input.getText().toString().trim();
+                    if (!newName.isEmpty()) {
+                        meshManager.updateDisplayName(newName);
+                        refreshDeviceNameDisplay();
+                        updateMeshUI(meshManager.isMeshRunning());
+                        Toast.makeText(this, "Phone name set to: " + newName, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Phone name cannot be empty", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        refreshDeviceNameDisplay();
         updateMeshUI(meshManager.isMeshRunning());
         peerAdapter.updatePeers(meshManager.getDiscoveredPeers());
     }
